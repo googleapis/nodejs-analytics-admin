@@ -18,7 +18,7 @@ async function main(
 ) {
   // [START analytics_admin_quickstart]
   // Imports the Google Cloud client library
-  const {AnalyticsAdminServiceClient} = require('@google-cloud/os-config');
+  const {AnalyticsAdminServiceClient} = require('@google-analytics/admin');
 
   // Creates a client
   const client = new AnalyticsAdminServiceClient();
@@ -34,12 +34,11 @@ async function main(
   // [END analytics_admin_quickstart]
 }
 
-const args = process.argv.slice(2);
 main(...process.argv.slice(2)).catch(err => {
   console.error(err.message);
   process.exitCode = 1;
 });
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', err => {
   console.error(err.message);
   process.exitCode = 1;
 });

@@ -34,6 +34,7 @@
     "lint": "gts check",
     "prelint": "cd samples; npm link ../; npm i",
     "prepare": "npm run compile-protos && npm run compile",
+    "samples-test": "cd samples/ && npm link ../ && npm test && cd ../",
     "system-test": "c8 mocha build/system-test",
     "test": "c8 mocha build/test"
   },
