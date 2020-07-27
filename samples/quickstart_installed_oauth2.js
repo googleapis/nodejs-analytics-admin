@@ -35,6 +35,8 @@ const destroyer = require('server-destroy');
 // Reads the secrets from a `keys.json` file, which should be downloaded from
 // the Google Developers Console and saved in the same directory with the sample
 // app.
+// eslint-disable-next-line node/no-unpublished-require
+// eslint-disable-next-line node/no-missing-require, node/no-unpublished-require
 const keys = require('./oauth2.keys.json');
 
 const SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
