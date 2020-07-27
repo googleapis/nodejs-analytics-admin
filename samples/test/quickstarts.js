@@ -28,7 +28,7 @@ const {describe, it} = require('mocha');
 
 // const name = 'google-cloud-node';
 
-describe('Quickstart', async () => {  
+describe('Quickstart', async () => {
   it('should run quickstart', async () => {
     // TODO: find out an actual test for our API client:
     // const stdout = execSync(`node quickstart_service_account.js`, {cwd});
