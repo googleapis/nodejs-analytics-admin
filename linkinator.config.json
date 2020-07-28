@@ -3,7 +3,10 @@
   "skip": [
     "https://codecov.io/gh/googleapis/",
     "www.googleapis.com",
-    "img.shields.io"
+    "img.shields.io",
+    "https://developers.google.com/analytics-admin/",
+    "https://googleapis.dev/nodejs/analytics-admin/latest/index.html",
+    "https://github.com/googleapis/nodejs-analytics-admin/blob/master/samples/quickstart.js"
   ],
   "silent": true,
   "concurrency": 10
