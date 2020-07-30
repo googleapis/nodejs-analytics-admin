@@ -29,7 +29,7 @@ Google APIs Client Libraries, in [Client Libraries Explained][explained].
 * [Quickstart](#quickstart)
   * [Before you begin](#before-you-begin)
   * [Installing the client library](#installing-the-client-library)
-  * [Using the client library](#using-the-client-library)
+
 * [Samples](#samples)
 * [Versioning](#versioning)
 * [Contributing](#contributing)
@@ -51,26 +51,6 @@ npm install @google-analytics/admin
 ```
 
 
-### Using the client library
-
-```javascript
-// Imports the Google Cloud client library
-const {AnalyticsAdminServiceClient} = require('@google-analytics/admin');
-
-// Creates a client
-const client = new AnalyticsAdminServiceClient();
-
-// name = 'my-name' // Get an account for a name.
-async function getAccount() {
-  const [account] = await client.getAccount({
-    name,
-  });
-  console.info(account);
-}
-getAccount();
-
-```
-
 
 
 ## Samples
@@ -80,7 +60,8 @@ has instructions for running the samples.
 
 | Sample                      | Source Code                       | Try it |
 | --------------------------- | --------------------------------- | ------ |
-| Quickstart | [source code](https://github.com/googleapis/nodejs-analytics-admin/blob/master/samples/quickstart.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-analytics-admin&page=editor&open_in_editor=samples/quickstart.js,samples/README.md) |
+| Quickstart_installed_oauth2 | [source code](https://github.com/googleapis/nodejs-analytics-admin/blob/master/samples/quickstart_installed_oauth2.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-analytics-admin&page=editor&open_in_editor=samples/quickstart_installed_oauth2.js,samples/README.md) |
+| Quickstart_service_account.js | [source code](https://github.com/googleapis/nodejs-analytics-admin/blob/master/samples/quickstart_service_account.js.js) | [![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-analytics-admin&page=editor&open_in_editor=samples/quickstart_service_account.js.js,samples/README.md) |
 
 
 
