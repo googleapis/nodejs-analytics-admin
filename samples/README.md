@@ -65,4 +65,4 @@ __Usage:__
 
 [shell_img]: https://gstatic.com/cloudssh/images/open-btn.png
 [shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-analytics-admin&page=editor&open_in_editor=samples/README.md
-[product-docs]: https://developers.google.com/analytics-admin/
+[product-docs]: https://developers.google.com/analytics
