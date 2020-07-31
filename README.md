@@ -14,6 +14,9 @@
 Admin client for Node.js
 
 
+A comprehensive list of changes in each version may be found in
+[the CHANGELOG](https://github.com/googleapis/nodejs-analytics-admin/blob/master/CHANGELOG.md).
+
 * [Google Analytics Admin Node.js Client API Reference][client-docs]
 * [Google Analytics Admin Documentation][product-docs]
 * [github.com/googleapis/nodejs-analytics-admin](https://github.com/googleapis/nodejs-analytics-admin)
@@ -123,7 +126,7 @@ Apache Version 2.0
 See [LICENSE](https://github.com/googleapis/nodejs-analytics-admin/blob/master/LICENSE)
 
 [client-docs]: https://googleapis.dev/nodejs/analytics-admin/latest/index.html
-[product-docs]: https://developers.google.com/analytics-admin/
+[product-docs]: https://developers.google.com/analytics
 [shell_img]: https://gstatic.com/cloudssh/images/open-btn.png
 [projects]: https://console.cloud.google.com/project
 [billing]: https://support.google.com/cloud/answer/6293499#enable-billing
