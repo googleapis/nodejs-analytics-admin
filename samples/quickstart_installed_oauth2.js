@@ -32,13 +32,15 @@ const url = require('url');
 const open = require('open');
 const destroyer = require('server-destroy');
 
-// Reads the secrets from a `keys.json` file, which should be downloaded from
-// the Google Developers Console and saved in the same directory with the sample
-// app.
+// Reads the secrets from a `oauth2.keys.json` file, which should be downloaded
+// from the Google Developers Console and saved in the same directory with the
+// sample app.
 // eslint-disable-next-line node/no-unpublished-require
 // eslint-disable-next-line node/no-missing-require, node/no-unpublished-require
 const keys = require('./oauth2.keys.json');
 
+// This sample app only calls read-only methods from the Admin API. Include
+// additional scopes if calling methods that modify the configuration.
 const SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
 
 async function listAccounts(authClient) {
@@ -73,13 +75,12 @@ function getAuthenticatedClient() {
     const oAuth2Client = new OAuth2Client(
       keys.web.client_id,
       keys.web.client_secret,
-      // The first redirect URL from the `keys.json` file will be used to
-      // generate the OAuth2 callback URL. Update the line below or edit the
-      // redirect URL in the Google Developers Console if needed.
+      // The first redirect URL from the `oauth2.keys.json` file will be used
+      // to generate the OAuth2 callback URL. Update the line below or edit
+      // the redirect URL in the Google Developers Console if needed.
       // This sample app expects the callback URL to be
       // 'http://localhost:3000/oauth2callback'
-      //keys.web.redirect_uris[0]
-      'http://ikuleshov.mtv.corp.google.com:3000/oauth2callback'
+      keys.web.redirect_uris[0]
     );
 
     // Generate the url that will be used for the consent dialog.
@@ -88,13 +89,14 @@ function getAuthenticatedClient() {
       scope: SCOPES.join(' '),
     });
 
-    // Open an http server to accept the oauth callback. In this simple example, the
+    // Open an http server to accept the oauth callback. In this example, the
     // only request to our webserver is to /oauth2callback?code=<code>
     const server = http
       .createServer(async (req, res) => {
         try {
           if (req.url.indexOf('/oauth2callback') > -1) {
-            // acquire the code from the querystring, and close the web server.
+            // Acquire the code from the querystring, and close the web
+            // server.
             const qs = new url.URL(req.url, 'http://localhost:3000')
               .searchParams;
             const code = qs.get('code');
@@ -129,7 +131,6 @@ async function main() {
   getAuthenticatedClient().then(authClient => listAccounts(authClient));
 }
 
-main().catch(console.error);
 main(...process.argv.slice(2)).catch(err => {
   console.error(err.message);
   process.exitCode = 1;

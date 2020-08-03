@@ -57,7 +57,6 @@ async function main() {
   });
 }
 
-main().catch(console.error);
 main(...process.argv.slice(2)).catch(err => {
   console.error(err.message);
   process.exitCode = 1;
