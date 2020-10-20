@@ -2,11 +2,6 @@
 
 ## [1.2.0](https://www.github.com/googleapis/nodejs-analytics-admin/compare/v1.1.2...v1.2.0) (2020-10-20)
 
-
-### ⚠ BREAKING CHANGES
-
-* added ListAccountSummaries method (#40)
-
 ### Features
 
 * added ListAccountSummaries method ([#40](https://www.github.com/googleapis/nodejs-analytics-admin/issues/40)) ([f55c2bf](https://www.github.com/googleapis/nodejs-analytics-admin/commit/f55c2bfaacb6203bcb31094c61e71a166b0ddeda))
