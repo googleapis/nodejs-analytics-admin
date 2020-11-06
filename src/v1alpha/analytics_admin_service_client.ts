@@ -1408,8 +1408,8 @@ export class AnalyticsAdminServiceClient {
    * @param {string} request.parent
    *   Required. Example format: accounts/1234
    * @param {boolean} [request.notifyNewUser]
-   *   Optional. If notify_new_user is set, then email new user that they've been given
-   *   permissions on the resource.
+   *   Optional. If set, then email the new user notifying them that they've been granted
+   *   permissions to the resource.
    * @param {google.analytics.admin.v1alpha.UserLink} request.userLink
    *   Required. The user link to create.
    * @param {object} [options]
@@ -1510,10 +1510,11 @@ export class AnalyticsAdminServiceClient {
    *   messages must either be empty or match this field.
    *   Example format: accounts/1234
    * @param {boolean} [request.notifyNewUsers]
-   *   Optional. If notify_new_users is set, then email new users that they've been given
-   *   permissions on the resource.
+   *   Optional. If set, then email the new users notifying them that they've been granted
+   *   permissions to the resource. Regardless of whether this is set or not,
+   *   notify_new_user field inside each individual request is ignored.
    * @param {number[]} request.requests
-   *   The requests specifying the user links to create.
+   *   Required. The requests specifying the user links to create.
    *   A maximum of 1000 user links can be created in a batch.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
@@ -1701,7 +1702,7 @@ export class AnalyticsAdminServiceClient {
    *   empty or match this field.
    *   Example format: accounts/1234
    * @param {number[]} request.requests
-   *   The requests specifying the user links to update.
+   *   Required. The requests specifying the user links to update.
    *   A maximum of 1000 user links can be updated in a batch.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
@@ -1889,7 +1890,7 @@ export class AnalyticsAdminServiceClient {
    *   field.
    *   Example format: accounts/1234
    * @param {number[]} request.requests
-   *   The requests specifying the user links to update.
+   *   Required. The requests specifying the user links to update.
    *   A maximum of 1000 user links can be updated in a batch.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
@@ -3183,6 +3184,7 @@ export class AnalyticsAdminServiceClient {
    * @param {string} request.name
    *   Required. The name of the settings to lookup.
    *   Format:
+   *
    *   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurementSettings
    *   Example: "properties/1000/webDataStreams/2000/enhancedMeasurementSettings"
    * @param {object} [options]
