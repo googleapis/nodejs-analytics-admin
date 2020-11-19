@@ -30,6 +30,11 @@ import * as path from 'path';
 import {Transform} from 'stream';
 import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
+/**
+ * Client JSON configuration object, loaded from
+ * `src/v1alpha/analytics_admin_service_client_config.json`.
+ * This file defines retry strategy and timeouts for all API methods in this library.
+ */
 import * as gapicConfig from './analytics_admin_service_client_config.json';
 
 const version = require('../../../package.json').version;
@@ -83,9 +88,9 @@ export class AnalyticsAdminServiceClient {
    *     your project ID will be detected automatically.
    * @param {string} [options.apiEndpoint] - The domain name of the
    *     API remote host.
-   * @param {gax.ClientConfig} [options.clientConfig] - client configuration override.
-   *     Follows the structure of `analytics_admin_service_client_config.json`.
-   * @param {boolean} fallback - Use HTTP fallback mode.
+   * @param {gax.ClientConfig} [options.clientConfig] - Client configuration override.
+   *     Follows the structure of {@link gapicConfig}.
+   * @param {boolean} [options.fallback] - Use HTTP fallback mode.
    *     In fallback mode, a special browser-compatible transport implementation is used
    *     instead of gRPC transport. In browser context (if the `window` object is defined)
    *     the fallback mode is enabled automatically; set `options.fallback` to `false`
@@ -99,6 +104,7 @@ export class AnalyticsAdminServiceClient {
       opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
+    // eslint-disable-next-line no-undef
     const fallback =
       opts?.fallback ??
       (typeof window !== 'undefined' && typeof window.fetch !== 'undefined');
@@ -436,7 +442,7 @@ export class AnalyticsAdminServiceClient {
   // -------------------
   getAccount(
     request: protos.google.analytics.admin.v1alpha.IGetAccountRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAccount,
@@ -446,7 +452,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getAccount(
     request: protos.google.analytics.admin.v1alpha.IGetAccountRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IAccount,
       | protos.google.analytics.admin.v1alpha.IGetAccountRequest
@@ -489,7 +495,7 @@ export class AnalyticsAdminServiceClient {
   getAccount(
     request: protos.google.analytics.admin.v1alpha.IGetAccountRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IAccount,
           | protos.google.analytics.admin.v1alpha.IGetAccountRequest
@@ -512,12 +518,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -532,7 +538,7 @@ export class AnalyticsAdminServiceClient {
   }
   deleteAccount(
     request: protos.google.analytics.admin.v1alpha.IDeleteAccountRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -542,7 +548,7 @@ export class AnalyticsAdminServiceClient {
   >;
   deleteAccount(
     request: protos.google.analytics.admin.v1alpha.IDeleteAccountRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IDeleteAccountRequest
@@ -593,7 +599,7 @@ export class AnalyticsAdminServiceClient {
   deleteAccount(
     request: protos.google.analytics.admin.v1alpha.IDeleteAccountRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IDeleteAccountRequest
@@ -616,12 +622,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -636,7 +642,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateAccount(
     request: protos.google.analytics.admin.v1alpha.IUpdateAccountRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAccount,
@@ -646,7 +652,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateAccount(
     request: protos.google.analytics.admin.v1alpha.IUpdateAccountRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IAccount,
       | protos.google.analytics.admin.v1alpha.IUpdateAccountRequest
@@ -688,7 +694,7 @@ export class AnalyticsAdminServiceClient {
   updateAccount(
     request: protos.google.analytics.admin.v1alpha.IUpdateAccountRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IAccount,
           | protos.google.analytics.admin.v1alpha.IUpdateAccountRequest
@@ -711,12 +717,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -731,7 +737,7 @@ export class AnalyticsAdminServiceClient {
   }
   provisionAccountTicket(
     request: protos.google.analytics.admin.v1alpha.IProvisionAccountTicketRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IProvisionAccountTicketResponse,
@@ -744,7 +750,7 @@ export class AnalyticsAdminServiceClient {
   >;
   provisionAccountTicket(
     request: protos.google.analytics.admin.v1alpha.IProvisionAccountTicketRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IProvisionAccountTicketResponse,
       | protos.google.analytics.admin.v1alpha.IProvisionAccountTicketRequest
@@ -786,7 +792,7 @@ export class AnalyticsAdminServiceClient {
   provisionAccountTicket(
     request: protos.google.analytics.admin.v1alpha.IProvisionAccountTicketRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IProvisionAccountTicketResponse,
           | protos.google.analytics.admin.v1alpha.IProvisionAccountTicketRequest
@@ -812,12 +818,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     this.initialize();
@@ -829,7 +835,7 @@ export class AnalyticsAdminServiceClient {
   }
   getProperty(
     request: protos.google.analytics.admin.v1alpha.IGetPropertyRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IProperty,
@@ -839,7 +845,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getProperty(
     request: protos.google.analytics.admin.v1alpha.IGetPropertyRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IProperty,
       | protos.google.analytics.admin.v1alpha.IGetPropertyRequest
@@ -883,7 +889,7 @@ export class AnalyticsAdminServiceClient {
   getProperty(
     request: protos.google.analytics.admin.v1alpha.IGetPropertyRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IProperty,
           | protos.google.analytics.admin.v1alpha.IGetPropertyRequest
@@ -906,12 +912,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -926,7 +932,7 @@ export class AnalyticsAdminServiceClient {
   }
   createProperty(
     request: protos.google.analytics.admin.v1alpha.ICreatePropertyRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IProperty,
@@ -936,7 +942,7 @@ export class AnalyticsAdminServiceClient {
   >;
   createProperty(
     request: protos.google.analytics.admin.v1alpha.ICreatePropertyRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IProperty,
       | protos.google.analytics.admin.v1alpha.ICreatePropertyRequest
@@ -976,7 +982,7 @@ export class AnalyticsAdminServiceClient {
   createProperty(
     request: protos.google.analytics.admin.v1alpha.ICreatePropertyRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IProperty,
           | protos.google.analytics.admin.v1alpha.ICreatePropertyRequest
@@ -999,12 +1005,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     this.initialize();
@@ -1012,7 +1018,7 @@ export class AnalyticsAdminServiceClient {
   }
   deleteProperty(
     request: protos.google.analytics.admin.v1alpha.IDeletePropertyRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -1022,7 +1028,7 @@ export class AnalyticsAdminServiceClient {
   >;
   deleteProperty(
     request: protos.google.analytics.admin.v1alpha.IDeletePropertyRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IDeletePropertyRequest
@@ -1073,7 +1079,7 @@ export class AnalyticsAdminServiceClient {
   deleteProperty(
     request: protos.google.analytics.admin.v1alpha.IDeletePropertyRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IDeletePropertyRequest
@@ -1096,12 +1102,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1116,7 +1122,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateProperty(
     request: protos.google.analytics.admin.v1alpha.IUpdatePropertyRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IProperty,
@@ -1126,7 +1132,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateProperty(
     request: protos.google.analytics.admin.v1alpha.IUpdatePropertyRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IProperty,
       | protos.google.analytics.admin.v1alpha.IUpdatePropertyRequest
@@ -1169,7 +1175,7 @@ export class AnalyticsAdminServiceClient {
   updateProperty(
     request: protos.google.analytics.admin.v1alpha.IUpdatePropertyRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IProperty,
           | protos.google.analytics.admin.v1alpha.IUpdatePropertyRequest
@@ -1192,12 +1198,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1212,7 +1218,7 @@ export class AnalyticsAdminServiceClient {
   }
   getUserLink(
     request: protos.google.analytics.admin.v1alpha.IGetUserLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IUserLink,
@@ -1222,7 +1228,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getUserLink(
     request: protos.google.analytics.admin.v1alpha.IGetUserLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IUserLink,
       | protos.google.analytics.admin.v1alpha.IGetUserLinkRequest
@@ -1261,7 +1267,7 @@ export class AnalyticsAdminServiceClient {
   getUserLink(
     request: protos.google.analytics.admin.v1alpha.IGetUserLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IUserLink,
           | protos.google.analytics.admin.v1alpha.IGetUserLinkRequest
@@ -1284,12 +1290,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1304,7 +1310,7 @@ export class AnalyticsAdminServiceClient {
   }
   batchGetUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchGetUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IBatchGetUserLinksResponse,
@@ -1317,7 +1323,7 @@ export class AnalyticsAdminServiceClient {
   >;
   batchGetUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchGetUserLinksRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IBatchGetUserLinksResponse,
       | protos.google.analytics.admin.v1alpha.IBatchGetUserLinksRequest
@@ -1363,7 +1369,7 @@ export class AnalyticsAdminServiceClient {
   batchGetUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchGetUserLinksRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IBatchGetUserLinksResponse,
           | protos.google.analytics.admin.v1alpha.IBatchGetUserLinksRequest
@@ -1389,12 +1395,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1409,7 +1415,7 @@ export class AnalyticsAdminServiceClient {
   }
   createUserLink(
     request: protos.google.analytics.admin.v1alpha.ICreateUserLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IUserLink,
@@ -1419,7 +1425,7 @@ export class AnalyticsAdminServiceClient {
   >;
   createUserLink(
     request: protos.google.analytics.admin.v1alpha.ICreateUserLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IUserLink,
       | protos.google.analytics.admin.v1alpha.ICreateUserLinkRequest
@@ -1467,7 +1473,7 @@ export class AnalyticsAdminServiceClient {
   createUserLink(
     request: protos.google.analytics.admin.v1alpha.ICreateUserLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IUserLink,
           | protos.google.analytics.admin.v1alpha.ICreateUserLinkRequest
@@ -1490,12 +1496,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1510,7 +1516,7 @@ export class AnalyticsAdminServiceClient {
   }
   batchCreateUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksResponse,
@@ -1523,7 +1529,7 @@ export class AnalyticsAdminServiceClient {
   >;
   batchCreateUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksResponse,
       | protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksRequest
@@ -1575,7 +1581,7 @@ export class AnalyticsAdminServiceClient {
   batchCreateUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksResponse,
           | protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksRequest
@@ -1601,12 +1607,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1621,7 +1627,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateUserLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateUserLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IUserLink,
@@ -1631,7 +1637,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateUserLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateUserLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IUserLink,
       | protos.google.analytics.admin.v1alpha.IUpdateUserLinkRequest
@@ -1670,7 +1676,7 @@ export class AnalyticsAdminServiceClient {
   updateUserLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateUserLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IUserLink,
           | protos.google.analytics.admin.v1alpha.IUpdateUserLinkRequest
@@ -1693,12 +1699,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1713,7 +1719,7 @@ export class AnalyticsAdminServiceClient {
   }
   batchUpdateUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksResponse,
@@ -1726,7 +1732,7 @@ export class AnalyticsAdminServiceClient {
   >;
   batchUpdateUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksResponse,
       | protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksRequest
@@ -1771,7 +1777,7 @@ export class AnalyticsAdminServiceClient {
   batchUpdateUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksResponse,
           | protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksRequest
@@ -1797,12 +1803,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1817,7 +1823,7 @@ export class AnalyticsAdminServiceClient {
   }
   deleteUserLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteUserLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -1827,7 +1833,7 @@ export class AnalyticsAdminServiceClient {
   >;
   deleteUserLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteUserLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IDeleteUserLinkRequest
@@ -1866,7 +1872,7 @@ export class AnalyticsAdminServiceClient {
   deleteUserLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteUserLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IDeleteUserLinkRequest
@@ -1889,12 +1895,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1909,7 +1915,7 @@ export class AnalyticsAdminServiceClient {
   }
   batchDeleteUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchDeleteUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -1922,7 +1928,7 @@ export class AnalyticsAdminServiceClient {
   >;
   batchDeleteUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchDeleteUserLinksRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IBatchDeleteUserLinksRequest
@@ -1967,7 +1973,7 @@ export class AnalyticsAdminServiceClient {
   batchDeleteUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchDeleteUserLinksRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IBatchDeleteUserLinksRequest
@@ -1993,12 +1999,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2013,7 +2019,7 @@ export class AnalyticsAdminServiceClient {
   }
   getWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetWebDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IWebDataStream,
@@ -2026,7 +2032,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetWebDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IWebDataStream,
       | protos.google.analytics.admin.v1alpha.IGetWebDataStreamRequest
@@ -2070,7 +2076,7 @@ export class AnalyticsAdminServiceClient {
   getWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetWebDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IWebDataStream,
           | protos.google.analytics.admin.v1alpha.IGetWebDataStreamRequest
@@ -2096,12 +2102,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2116,7 +2122,7 @@ export class AnalyticsAdminServiceClient {
   }
   deleteWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteWebDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -2129,7 +2135,7 @@ export class AnalyticsAdminServiceClient {
   >;
   deleteWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteWebDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IDeleteWebDataStreamRequest
@@ -2170,7 +2176,7 @@ export class AnalyticsAdminServiceClient {
   deleteWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteWebDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IDeleteWebDataStreamRequest
@@ -2196,12 +2202,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2216,7 +2222,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateWebDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IWebDataStream,
@@ -2229,7 +2235,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateWebDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IWebDataStream,
       | protos.google.analytics.admin.v1alpha.IUpdateWebDataStreamRequest
@@ -2271,7 +2277,7 @@ export class AnalyticsAdminServiceClient {
   updateWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateWebDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IWebDataStream,
           | protos.google.analytics.admin.v1alpha.IUpdateWebDataStreamRequest
@@ -2297,12 +2303,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2317,7 +2323,7 @@ export class AnalyticsAdminServiceClient {
   }
   createWebDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateWebDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IWebDataStream,
@@ -2330,7 +2336,7 @@ export class AnalyticsAdminServiceClient {
   >;
   createWebDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateWebDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IWebDataStream,
       | protos.google.analytics.admin.v1alpha.ICreateWebDataStreamRequest
@@ -2372,7 +2378,7 @@ export class AnalyticsAdminServiceClient {
   createWebDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateWebDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IWebDataStream,
           | protos.google.analytics.admin.v1alpha.ICreateWebDataStreamRequest
@@ -2398,12 +2404,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2418,7 +2424,7 @@ export class AnalyticsAdminServiceClient {
   }
   getIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetIosAppDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IIosAppDataStream,
@@ -2431,7 +2437,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetIosAppDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IIosAppDataStream,
       | protos.google.analytics.admin.v1alpha.IGetIosAppDataStreamRequest
@@ -2475,7 +2481,7 @@ export class AnalyticsAdminServiceClient {
   getIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetIosAppDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IIosAppDataStream,
           | protos.google.analytics.admin.v1alpha.IGetIosAppDataStreamRequest
@@ -2501,12 +2507,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2521,7 +2527,7 @@ export class AnalyticsAdminServiceClient {
   }
   deleteIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteIosAppDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -2534,7 +2540,7 @@ export class AnalyticsAdminServiceClient {
   >;
   deleteIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteIosAppDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IDeleteIosAppDataStreamRequest
@@ -2575,7 +2581,7 @@ export class AnalyticsAdminServiceClient {
   deleteIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteIosAppDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IDeleteIosAppDataStreamRequest
@@ -2601,12 +2607,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2625,7 +2631,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateIosAppDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IIosAppDataStream,
@@ -2638,7 +2644,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateIosAppDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IIosAppDataStream,
       | protos.google.analytics.admin.v1alpha.IUpdateIosAppDataStreamRequest
@@ -2680,7 +2686,7 @@ export class AnalyticsAdminServiceClient {
   updateIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateIosAppDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IIosAppDataStream,
           | protos.google.analytics.admin.v1alpha.IUpdateIosAppDataStreamRequest
@@ -2706,12 +2712,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2730,7 +2736,7 @@ export class AnalyticsAdminServiceClient {
   }
   createIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateIosAppDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IIosAppDataStream,
@@ -2743,7 +2749,7 @@ export class AnalyticsAdminServiceClient {
   >;
   createIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateIosAppDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IIosAppDataStream,
       | protos.google.analytics.admin.v1alpha.ICreateIosAppDataStreamRequest
@@ -2785,7 +2791,7 @@ export class AnalyticsAdminServiceClient {
   createIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateIosAppDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IIosAppDataStream,
           | protos.google.analytics.admin.v1alpha.ICreateIosAppDataStreamRequest
@@ -2811,12 +2817,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2835,7 +2841,7 @@ export class AnalyticsAdminServiceClient {
   }
   getAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetAndroidAppDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
@@ -2848,7 +2854,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetAndroidAppDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
       | protos.google.analytics.admin.v1alpha.IGetAndroidAppDataStreamRequest
@@ -2892,7 +2898,7 @@ export class AnalyticsAdminServiceClient {
   getAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetAndroidAppDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
           | protos.google.analytics.admin.v1alpha.IGetAndroidAppDataStreamRequest
@@ -2918,12 +2924,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -2942,7 +2948,7 @@ export class AnalyticsAdminServiceClient {
   }
   deleteAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteAndroidAppDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -2955,7 +2961,7 @@ export class AnalyticsAdminServiceClient {
   >;
   deleteAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteAndroidAppDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IDeleteAndroidAppDataStreamRequest
@@ -2996,7 +3002,7 @@ export class AnalyticsAdminServiceClient {
   deleteAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteAndroidAppDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IDeleteAndroidAppDataStreamRequest
@@ -3022,12 +3028,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3046,7 +3052,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateAndroidAppDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
@@ -3059,7 +3065,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateAndroidAppDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
       | protos.google.analytics.admin.v1alpha.IUpdateAndroidAppDataStreamRequest
@@ -3101,7 +3107,7 @@ export class AnalyticsAdminServiceClient {
   updateAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateAndroidAppDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
           | protos.google.analytics.admin.v1alpha.IUpdateAndroidAppDataStreamRequest
@@ -3127,12 +3133,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3151,7 +3157,7 @@ export class AnalyticsAdminServiceClient {
   }
   createAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateAndroidAppDataStreamRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
@@ -3164,7 +3170,7 @@ export class AnalyticsAdminServiceClient {
   >;
   createAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateAndroidAppDataStreamRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
       | protos.google.analytics.admin.v1alpha.ICreateAndroidAppDataStreamRequest
@@ -3206,7 +3212,7 @@ export class AnalyticsAdminServiceClient {
   createAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateAndroidAppDataStreamRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IAndroidAppDataStream,
           | protos.google.analytics.admin.v1alpha.ICreateAndroidAppDataStreamRequest
@@ -3232,12 +3238,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3256,7 +3262,7 @@ export class AnalyticsAdminServiceClient {
   }
   getEnhancedMeasurementSettings(
     request: protos.google.analytics.admin.v1alpha.IGetEnhancedMeasurementSettingsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IEnhancedMeasurementSettings,
@@ -3269,7 +3275,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getEnhancedMeasurementSettings(
     request: protos.google.analytics.admin.v1alpha.IGetEnhancedMeasurementSettingsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IEnhancedMeasurementSettings,
       | protos.google.analytics.admin.v1alpha.IGetEnhancedMeasurementSettingsRequest
@@ -3314,7 +3320,7 @@ export class AnalyticsAdminServiceClient {
   getEnhancedMeasurementSettings(
     request: protos.google.analytics.admin.v1alpha.IGetEnhancedMeasurementSettingsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IEnhancedMeasurementSettings,
           | protos.google.analytics.admin.v1alpha.IGetEnhancedMeasurementSettingsRequest
@@ -3340,12 +3346,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3364,7 +3370,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateEnhancedMeasurementSettings(
     request: protos.google.analytics.admin.v1alpha.IUpdateEnhancedMeasurementSettingsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IEnhancedMeasurementSettings,
@@ -3377,7 +3383,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateEnhancedMeasurementSettings(
     request: protos.google.analytics.admin.v1alpha.IUpdateEnhancedMeasurementSettingsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IEnhancedMeasurementSettings,
       | protos.google.analytics.admin.v1alpha.IUpdateEnhancedMeasurementSettingsRequest
@@ -3421,7 +3427,7 @@ export class AnalyticsAdminServiceClient {
   updateEnhancedMeasurementSettings(
     request: protos.google.analytics.admin.v1alpha.IUpdateEnhancedMeasurementSettingsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IEnhancedMeasurementSettings,
           | protos.google.analytics.admin.v1alpha.IUpdateEnhancedMeasurementSettingsRequest
@@ -3447,12 +3453,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3472,7 +3478,7 @@ export class AnalyticsAdminServiceClient {
   }
   createFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.ICreateFirebaseLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IFirebaseLink,
@@ -3485,7 +3491,7 @@ export class AnalyticsAdminServiceClient {
   >;
   createFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.ICreateFirebaseLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IFirebaseLink,
       | protos.google.analytics.admin.v1alpha.ICreateFirebaseLinkRequest
@@ -3529,7 +3535,7 @@ export class AnalyticsAdminServiceClient {
   createFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.ICreateFirebaseLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IFirebaseLink,
           | protos.google.analytics.admin.v1alpha.ICreateFirebaseLinkRequest
@@ -3555,12 +3561,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3575,7 +3581,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IFirebaseLink,
@@ -3588,7 +3594,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IFirebaseLink,
       | protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest
@@ -3629,7 +3635,7 @@ export class AnalyticsAdminServiceClient {
   updateFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IFirebaseLink,
           | protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest
@@ -3655,12 +3661,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3675,7 +3681,7 @@ export class AnalyticsAdminServiceClient {
   }
   deleteFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteFirebaseLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -3688,7 +3694,7 @@ export class AnalyticsAdminServiceClient {
   >;
   deleteFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteFirebaseLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IDeleteFirebaseLinkRequest
@@ -3728,7 +3734,7 @@ export class AnalyticsAdminServiceClient {
   deleteFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteFirebaseLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IDeleteFirebaseLinkRequest
@@ -3754,12 +3760,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3774,7 +3780,7 @@ export class AnalyticsAdminServiceClient {
   }
   listFirebaseLinks(
     request: protos.google.analytics.admin.v1alpha.IListFirebaseLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IListFirebaseLinksResponse,
@@ -3787,7 +3793,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listFirebaseLinks(
     request: protos.google.analytics.admin.v1alpha.IListFirebaseLinksRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IListFirebaseLinksResponse,
       | protos.google.analytics.admin.v1alpha.IListFirebaseLinksRequest
@@ -3828,7 +3834,7 @@ export class AnalyticsAdminServiceClient {
   listFirebaseLinks(
     request: protos.google.analytics.admin.v1alpha.IListFirebaseLinksRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IListFirebaseLinksResponse,
           | protos.google.analytics.admin.v1alpha.IListFirebaseLinksRequest
@@ -3854,12 +3860,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3874,7 +3880,7 @@ export class AnalyticsAdminServiceClient {
   }
   getGlobalSiteTag(
     request: protos.google.analytics.admin.v1alpha.IGetGlobalSiteTagRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IGlobalSiteTag,
@@ -3887,7 +3893,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getGlobalSiteTag(
     request: protos.google.analytics.admin.v1alpha.IGetGlobalSiteTagRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IGlobalSiteTag,
       | protos.google.analytics.admin.v1alpha.IGetGlobalSiteTagRequest
@@ -3930,7 +3936,7 @@ export class AnalyticsAdminServiceClient {
   getGlobalSiteTag(
     request: protos.google.analytics.admin.v1alpha.IGetGlobalSiteTagRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IGlobalSiteTag,
           | protos.google.analytics.admin.v1alpha.IGetGlobalSiteTagRequest
@@ -3956,12 +3962,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -3976,7 +3982,7 @@ export class AnalyticsAdminServiceClient {
   }
   createGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.ICreateGoogleAdsLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IGoogleAdsLink,
@@ -3989,7 +3995,7 @@ export class AnalyticsAdminServiceClient {
   >;
   createGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.ICreateGoogleAdsLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IGoogleAdsLink,
       | protos.google.analytics.admin.v1alpha.ICreateGoogleAdsLinkRequest
@@ -4030,7 +4036,7 @@ export class AnalyticsAdminServiceClient {
   createGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.ICreateGoogleAdsLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IGoogleAdsLink,
           | protos.google.analytics.admin.v1alpha.ICreateGoogleAdsLinkRequest
@@ -4056,12 +4062,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -4076,7 +4082,7 @@ export class AnalyticsAdminServiceClient {
   }
   updateGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateGoogleAdsLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IGoogleAdsLink,
@@ -4089,7 +4095,7 @@ export class AnalyticsAdminServiceClient {
   >;
   updateGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateGoogleAdsLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IGoogleAdsLink,
       | protos.google.analytics.admin.v1alpha.IUpdateGoogleAdsLinkRequest
@@ -4130,7 +4136,7 @@ export class AnalyticsAdminServiceClient {
   updateGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateGoogleAdsLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IGoogleAdsLink,
           | protos.google.analytics.admin.v1alpha.IUpdateGoogleAdsLinkRequest
@@ -4156,12 +4162,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -4176,7 +4182,7 @@ export class AnalyticsAdminServiceClient {
   }
   deleteGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteGoogleAdsLinkRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.protobuf.IEmpty,
@@ -4189,7 +4195,7 @@ export class AnalyticsAdminServiceClient {
   >;
   deleteGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteGoogleAdsLinkRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.protobuf.IEmpty,
       | protos.google.analytics.admin.v1alpha.IDeleteGoogleAdsLinkRequest
@@ -4228,7 +4234,7 @@ export class AnalyticsAdminServiceClient {
   deleteGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteGoogleAdsLinkRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.protobuf.IEmpty,
           | protos.google.analytics.admin.v1alpha.IDeleteGoogleAdsLinkRequest
@@ -4254,12 +4260,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -4274,7 +4280,7 @@ export class AnalyticsAdminServiceClient {
   }
   getDataSharingSettings(
     request: protos.google.analytics.admin.v1alpha.IGetDataSharingSettingsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IDataSharingSettings,
@@ -4287,7 +4293,7 @@ export class AnalyticsAdminServiceClient {
   >;
   getDataSharingSettings(
     request: protos.google.analytics.admin.v1alpha.IGetDataSharingSettingsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: Callback<
       protos.google.analytics.admin.v1alpha.IDataSharingSettings,
       | protos.google.analytics.admin.v1alpha.IGetDataSharingSettingsRequest
@@ -4329,7 +4335,7 @@ export class AnalyticsAdminServiceClient {
   getDataSharingSettings(
     request: protos.google.analytics.admin.v1alpha.IGetDataSharingSettingsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | Callback<
           protos.google.analytics.admin.v1alpha.IDataSharingSettings,
           | protos.google.analytics.admin.v1alpha.IGetDataSharingSettingsRequest
@@ -4355,12 +4361,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -4380,7 +4386,7 @@ export class AnalyticsAdminServiceClient {
 
   listAccounts(
     request: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAccount[],
@@ -4390,7 +4396,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listAccounts(
     request: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IListAccountsRequest,
       | protos.google.analytics.admin.v1alpha.IListAccountsResponse
@@ -4448,7 +4454,7 @@ export class AnalyticsAdminServiceClient {
   listAccounts(
     request: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IListAccountsRequest,
           | protos.google.analytics.admin.v1alpha.IListAccountsResponse
@@ -4471,12 +4477,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     this.initialize();
@@ -4515,7 +4521,7 @@ export class AnalyticsAdminServiceClient {
    */
   listAccountsStream(
     request?: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -4566,7 +4572,7 @@ export class AnalyticsAdminServiceClient {
    */
   listAccountsAsync(
     request?: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.analytics.admin.v1alpha.IAccount> {
     request = request || {};
     options = options || {};
@@ -4581,7 +4587,7 @@ export class AnalyticsAdminServiceClient {
   }
   listAccountSummaries(
     request: protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAccountSummary[],
@@ -4591,7 +4597,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listAccountSummaries(
     request: protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
       | protos.google.analytics.admin.v1alpha.IListAccountSummariesResponse
@@ -4641,7 +4647,7 @@ export class AnalyticsAdminServiceClient {
   listAccountSummaries(
     request: protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
           | protos.google.analytics.admin.v1alpha.IListAccountSummariesResponse
@@ -4664,12 +4670,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     this.initialize();
@@ -4704,7 +4710,7 @@ export class AnalyticsAdminServiceClient {
    */
   listAccountSummariesStream(
     request?: protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -4751,7 +4757,7 @@ export class AnalyticsAdminServiceClient {
    */
   listAccountSummariesAsync(
     request?: protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.analytics.admin.v1alpha.IAccountSummary> {
     request = request || {};
     options = options || {};
@@ -4766,7 +4772,7 @@ export class AnalyticsAdminServiceClient {
   }
   listProperties(
     request: protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IProperty[],
@@ -4776,7 +4782,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listProperties(
     request: protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
       | protos.google.analytics.admin.v1alpha.IListPropertiesResponse
@@ -4847,7 +4853,7 @@ export class AnalyticsAdminServiceClient {
   listProperties(
     request: protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
           | protos.google.analytics.admin.v1alpha.IListPropertiesResponse
@@ -4870,12 +4876,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     this.initialize();
@@ -4926,7 +4932,7 @@ export class AnalyticsAdminServiceClient {
    */
   listPropertiesStream(
     request?: protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -4989,7 +4995,7 @@ export class AnalyticsAdminServiceClient {
    */
   listPropertiesAsync(
     request?: protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.analytics.admin.v1alpha.IProperty> {
     request = request || {};
     options = options || {};
@@ -5004,7 +5010,7 @@ export class AnalyticsAdminServiceClient {
   }
   listUserLinks(
     request: protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IUserLink[],
@@ -5014,7 +5020,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listUserLinks(
     request: protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
       | protos.google.analytics.admin.v1alpha.IListUserLinksResponse
@@ -5066,7 +5072,7 @@ export class AnalyticsAdminServiceClient {
   listUserLinks(
     request: protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
           | protos.google.analytics.admin.v1alpha.IListUserLinksResponse
@@ -5089,12 +5095,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -5138,7 +5144,7 @@ export class AnalyticsAdminServiceClient {
    */
   listUserLinksStream(
     request?: protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -5194,7 +5200,7 @@ export class AnalyticsAdminServiceClient {
    */
   listUserLinksAsync(
     request?: protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.analytics.admin.v1alpha.IUserLink> {
     request = request || {};
     options = options || {};
@@ -5216,7 +5222,7 @@ export class AnalyticsAdminServiceClient {
   }
   auditUserLinks(
     request: protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAuditUserLink[],
@@ -5226,7 +5232,7 @@ export class AnalyticsAdminServiceClient {
   >;
   auditUserLinks(
     request: protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
       | protos.google.analytics.admin.v1alpha.IAuditUserLinksResponse
@@ -5286,7 +5292,7 @@ export class AnalyticsAdminServiceClient {
   auditUserLinks(
     request: protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
           | protos.google.analytics.admin.v1alpha.IAuditUserLinksResponse
@@ -5309,12 +5315,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -5358,7 +5364,7 @@ export class AnalyticsAdminServiceClient {
    */
   auditUserLinksStream(
     request?: protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -5414,7 +5420,7 @@ export class AnalyticsAdminServiceClient {
    */
   auditUserLinksAsync(
     request?: protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.analytics.admin.v1alpha.IAuditUserLink> {
     request = request || {};
     options = options || {};
@@ -5436,7 +5442,7 @@ export class AnalyticsAdminServiceClient {
   }
   listWebDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IWebDataStream[],
@@ -5446,7 +5452,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listWebDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
       | protos.google.analytics.admin.v1alpha.IListWebDataStreamsResponse
@@ -5502,7 +5508,7 @@ export class AnalyticsAdminServiceClient {
   listWebDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
           | protos.google.analytics.admin.v1alpha.IListWebDataStreamsResponse
@@ -5525,12 +5531,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -5575,7 +5581,7 @@ export class AnalyticsAdminServiceClient {
    */
   listWebDataStreamsStream(
     request?: protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -5632,7 +5638,7 @@ export class AnalyticsAdminServiceClient {
    */
   listWebDataStreamsAsync(
     request?: protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.analytics.admin.v1alpha.IWebDataStream> {
     request = request || {};
     options = options || {};
@@ -5654,7 +5660,7 @@ export class AnalyticsAdminServiceClient {
   }
   listIosAppDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IIosAppDataStream[],
@@ -5664,7 +5670,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listIosAppDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
       | protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsResponse
@@ -5720,7 +5726,7 @@ export class AnalyticsAdminServiceClient {
   listIosAppDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
           | protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsResponse
@@ -5743,12 +5749,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -5793,7 +5799,7 @@ export class AnalyticsAdminServiceClient {
    */
   listIosAppDataStreamsStream(
     request?: protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -5850,7 +5856,7 @@ export class AnalyticsAdminServiceClient {
    */
   listIosAppDataStreamsAsync(
     request?: protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.analytics.admin.v1alpha.IIosAppDataStream> {
     request = request || {};
     options = options || {};
@@ -5872,7 +5878,7 @@ export class AnalyticsAdminServiceClient {
   }
   listAndroidAppDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IAndroidAppDataStream[],
@@ -5882,7 +5888,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listAndroidAppDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
       | protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsResponse
@@ -5940,7 +5946,7 @@ export class AnalyticsAdminServiceClient {
   listAndroidAppDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
           | protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsResponse
@@ -5963,12 +5969,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -6019,7 +6025,7 @@ export class AnalyticsAdminServiceClient {
    */
   listAndroidAppDataStreamsStream(
     request?: protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -6078,7 +6084,7 @@ export class AnalyticsAdminServiceClient {
    */
   listAndroidAppDataStreamsAsync(
     request?: protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<
     protos.google.analytics.admin.v1alpha.IAndroidAppDataStream
   > {
@@ -6104,7 +6110,7 @@ export class AnalyticsAdminServiceClient {
   }
   listGoogleAdsLinks(
     request: protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Promise<
     [
       protos.google.analytics.admin.v1alpha.IGoogleAdsLink[],
@@ -6114,7 +6120,7 @@ export class AnalyticsAdminServiceClient {
   >;
   listGoogleAdsLinks(
     request: protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
-    options: gax.CallOptions,
+    options: CallOptions,
     callback: PaginationCallback<
       protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
       | protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksResponse
@@ -6166,7 +6172,7 @@ export class AnalyticsAdminServiceClient {
   listGoogleAdsLinks(
     request: protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
     optionsOrCallback?:
-      | gax.CallOptions
+      | CallOptions
       | PaginationCallback<
           protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
           | protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksResponse
@@ -6189,12 +6195,12 @@ export class AnalyticsAdminServiceClient {
     ]
   > | void {
     request = request || {};
-    let options: gax.CallOptions;
+    let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
     } else {
-      options = optionsOrCallback as gax.CallOptions;
+      options = optionsOrCallback as CallOptions;
     }
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -6238,7 +6244,7 @@ export class AnalyticsAdminServiceClient {
    */
   listGoogleAdsLinksStream(
     request?: protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): Transform {
     request = request || {};
     options = options || {};
@@ -6294,7 +6300,7 @@ export class AnalyticsAdminServiceClient {
    */
   listGoogleAdsLinksAsync(
     request?: protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
-    options?: gax.CallOptions
+    options?: CallOptions
   ): AsyncIterable<protos.google.analytics.admin.v1alpha.IGoogleAdsLink> {
     request = request || {};
     options = options || {};
