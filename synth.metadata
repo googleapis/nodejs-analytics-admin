@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/nodejs-analytics-admin.git",
-        "sha": "7f1ae38141775e2ae2f45a2fb30e10ddfbc96664"
+        "sha": "63b9aef4b393d71f158a74eac9b367471684cce8"
       }
     },
     {
@@ -87,7 +87,6 @@
     "README.md",
     "api-extractor.json",
     "linkinator.config.json",
-    "package-lock.json.2150883559",
     "protos/google/analytics/admin/v1alpha/analytics_admin.proto",
     "protos/google/analytics/admin/v1alpha/resources.proto",
     "protos/protos.d.ts",
@@ -95,7 +94,6 @@
     "protos/protos.json",
     "renovate.json",
     "samples/README.md",
-    "samples/package-lock.json.903967499",
     "src/index.ts",
     "src/v1alpha/analytics_admin_service_client.ts",
     "src/v1alpha/analytics_admin_service_client_config.json",

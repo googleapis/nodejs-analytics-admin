@@ -18,17 +18,8 @@
 
 import {AnalyticsAdminServiceClient} from '@google-analytics/admin';
 
-// check that the client class type name can be used
-function doStuffWithAnalyticsAdminServiceClient(
-  client: AnalyticsAdminServiceClient
-) {
-  client.close();
-}
-
 function main() {
-  // check that the client instance can be created
-  const analyticsAdminServiceClient = new AnalyticsAdminServiceClient();
-  doStuffWithAnalyticsAdminServiceClient(analyticsAdminServiceClient);
+  new AnalyticsAdminServiceClient();
 }
 
 main();

@@ -60,10 +60,8 @@ export class AnalyticsAdminServiceClient {
   /**
    * Construct an instance of AnalyticsAdminServiceClient.
    *
-   * @param {object} [options] - The configuration object.
-   * The options accepted by the constructor are described in detail
-   * in [this document](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#creating-the-client-instance).
-   * The common options are:
+   * @param {object} [options] - The configuration object. See the subsequent
+   *   parameters for more details.
    * @param {object} [options.credentials] - Credentials object.
    * @param {string} [options.credentials.client_email]
    * @param {string} [options.credentials.private_key]
@@ -83,34 +81,44 @@ export class AnalyticsAdminServiceClient {
    *     your project ID will be detected automatically.
    * @param {string} [options.apiEndpoint] - The domain name of the
    *     API remote host.
-   * @param {gax.ClientConfig} [options.clientConfig] - client configuration override.
-   *     TODO(@alexander-fenster): link to gax documentation.
-   * @param {boolean} fallback - Use HTTP fallback mode.
-   *     In fallback mode, a special browser-compatible transport implementation is used
-   *     instead of gRPC transport. In browser context (if the `window` object is defined)
-   *     the fallback mode is enabled automatically; set `options.fallback` to `false`
-   *     if you need to override this behavior.
    */
+
   constructor(opts?: ClientOptions) {
-    // Ensure that options include all the required fields.
+    // Ensure that options include the service address and port.
     const staticMembers = this
       .constructor as typeof AnalyticsAdminServiceClient;
     const servicePath =
-      opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
-    const port = opts?.port || staticMembers.port;
-    const clientConfig = opts?.clientConfig ?? {};
-    const fallback = opts?.fallback ?? typeof window !== 'undefined';
-    opts = Object.assign({servicePath, port, clientConfig, fallback}, opts);
+      opts && opts.servicePath
+        ? opts.servicePath
+        : opts && opts.apiEndpoint
+        ? opts.apiEndpoint
+        : staticMembers.servicePath;
+    const port = opts && opts.port ? opts.port : staticMembers.port;
 
-    // If scopes are unset in options and we're connecting to a non-default endpoint, set scopes just in case.
-    if (servicePath !== staticMembers.servicePath && !('scopes' in opts)) {
-      opts['scopes'] = staticMembers.scopes;
+    if (!opts) {
+      opts = {servicePath, port};
     }
+    opts.servicePath = opts.servicePath || servicePath;
+    opts.port = opts.port || port;
 
-    // Choose either gRPC or proto-over-HTTP implementation of google-gax.
+    // users can override the config from client side, like retry codes name.
+    // The detailed structure of the clientConfig can be found here: https://github.com/googleapis/gax-nodejs/blob/master/src/gax.ts#L546
+    // The way to override client config for Showcase API:
+    //
+    // const customConfig = {"interfaces": {"google.showcase.v1beta1.Echo": {"methods": {"Echo": {"retry_codes_name": "idempotent", "retry_params_name": "default"}}}}}
+    // const showcaseClient = new showcaseClient({ projectId, customConfig });
+    opts.clientConfig = opts.clientConfig || {};
+
+    // If we're running in browser, it's OK to omit `fallback` since
+    // google-gax has `browser` field in its `package.json`.
+    // For Electron (which does not respect `browser` field),
+    // pass `{fallback: true}` to the AnalyticsAdminServiceClient constructor.
     this._gaxModule = opts.fallback ? gax.fallback : gax;
 
-    // Create a `gaxGrpc` object, with any grpc-specific options sent to the client.
+    // Create a `gaxGrpc` object, with any grpc-specific options
+    // sent to the client.
+    opts.scopes = (this
+      .constructor as typeof AnalyticsAdminServiceClient).scopes;
     this._gaxGrpc = new this._gaxModule.GrpcClient(opts);
 
     // Save options to use in initialize() method.
@@ -118,11 +126,6 @@ export class AnalyticsAdminServiceClient {
 
     // Save the auth object to the client, for use by other methods.
     this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
-
-    // Set the default scopes in auth client if needed.
-    if (servicePath === staticMembers.servicePath) {
-      this.auth.defaultScopes = staticMembers.scopes;
-    }
 
     // Determine the client header string.
     const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
@@ -376,7 +379,6 @@ export class AnalyticsAdminServiceClient {
 
   /**
    * The DNS address for this API service.
-   * @returns {string} The DNS address for this service.
    */
   static get servicePath() {
     return 'analyticsadmin.googleapis.com';
@@ -385,7 +387,6 @@ export class AnalyticsAdminServiceClient {
   /**
    * The DNS address for this API service - same as servicePath(),
    * exists for compatibility reasons.
-   * @returns {string} The DNS address for this service.
    */
   static get apiEndpoint() {
     return 'analyticsadmin.googleapis.com';
@@ -393,7 +394,6 @@ export class AnalyticsAdminServiceClient {
 
   /**
    * The port for this API service.
-   * @returns {number} The default port for this service.
    */
   static get port() {
     return 443;
@@ -402,7 +402,6 @@ export class AnalyticsAdminServiceClient {
   /**
    * The scopes needed to make gRPC calls for every method defined
    * in this service.
-   * @returns {string[]} List of default scopes.
    */
   static get scopes() {
     return [
@@ -417,7 +416,8 @@ export class AnalyticsAdminServiceClient {
   getProjectId(callback: Callback<string, undefined, undefined>): void;
   /**
    * Return the project ID used by this class.
-   * @returns {Promise} A promise that resolves to string containing the project ID.
+   * @param {function(Error, string)} callback - the callback to
+   *   be called with the current project Id.
    */
   getProjectId(
     callback?: Callback<string, undefined, undefined>
@@ -478,11 +478,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Account]{@link google.analytics.admin.v1alpha.Account}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getAccount(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getAccount(
     request: protos.google.analytics.admin.v1alpha.IGetAccountRequest,
@@ -582,11 +578,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteAccount(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteAccount(
     request: protos.google.analytics.admin.v1alpha.IDeleteAccountRequest,
@@ -677,11 +669,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Account]{@link google.analytics.admin.v1alpha.Account}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateAccount(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateAccount(
     request: protos.google.analytics.admin.v1alpha.IUpdateAccountRequest,
@@ -775,11 +763,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [ProvisionAccountTicketResponse]{@link google.analytics.admin.v1alpha.ProvisionAccountTicketResponse}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.provisionAccountTicket(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   provisionAccountTicket(
     request: protos.google.analytics.admin.v1alpha.IProvisionAccountTicketRequest,
@@ -872,11 +856,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Property]{@link google.analytics.admin.v1alpha.Property}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getProperty(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getProperty(
     request: protos.google.analytics.admin.v1alpha.IGetPropertyRequest,
@@ -965,11 +945,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Property]{@link google.analytics.admin.v1alpha.Property}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createProperty(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   createProperty(
     request: protos.google.analytics.admin.v1alpha.ICreatePropertyRequest,
@@ -1062,11 +1038,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteProperty(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteProperty(
     request: protos.google.analytics.admin.v1alpha.IDeletePropertyRequest,
@@ -1158,11 +1130,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Property]{@link google.analytics.admin.v1alpha.Property}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateProperty(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateProperty(
     request: protos.google.analytics.admin.v1alpha.IUpdatePropertyRequest,
@@ -1250,11 +1218,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [UserLink]{@link google.analytics.admin.v1alpha.UserLink}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getUserLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getUserLink(
     request: protos.google.analytics.admin.v1alpha.IGetUserLinkRequest,
@@ -1352,11 +1316,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [BatchGetUserLinksResponse]{@link google.analytics.admin.v1alpha.BatchGetUserLinksResponse}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.batchGetUserLinks(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   batchGetUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchGetUserLinksRequest,
@@ -1456,11 +1416,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [UserLink]{@link google.analytics.admin.v1alpha.UserLink}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createUserLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   createUserLink(
     request: protos.google.analytics.admin.v1alpha.ICreateUserLinkRequest,
@@ -1564,11 +1520,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [BatchCreateUserLinksResponse]{@link google.analytics.admin.v1alpha.BatchCreateUserLinksResponse}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.batchCreateUserLinks(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   batchCreateUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchCreateUserLinksRequest,
@@ -1659,11 +1611,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [UserLink]{@link google.analytics.admin.v1alpha.UserLink}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateUserLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateUserLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateUserLinkRequest,
@@ -1760,11 +1708,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [BatchUpdateUserLinksResponse]{@link google.analytics.admin.v1alpha.BatchUpdateUserLinksResponse}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.batchUpdateUserLinks(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   batchUpdateUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchUpdateUserLinksRequest,
@@ -1855,11 +1799,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteUserLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteUserLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteUserLinkRequest,
@@ -1956,11 +1896,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.batchDeleteUserLinks(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   batchDeleteUserLinks(
     request: protos.google.analytics.admin.v1alpha.IBatchDeleteUserLinksRequest,
@@ -2059,11 +1995,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [WebDataStream]{@link google.analytics.admin.v1alpha.WebDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getWebDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetWebDataStreamRequest,
@@ -2159,11 +2091,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteWebDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteWebDataStreamRequest,
@@ -2260,11 +2188,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [WebDataStream]{@link google.analytics.admin.v1alpha.WebDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateWebDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateWebDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateWebDataStreamRequest,
@@ -2361,11 +2285,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [WebDataStream]{@link google.analytics.admin.v1alpha.WebDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createWebDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   createWebDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateWebDataStreamRequest,
@@ -2464,11 +2384,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [IosAppDataStream]{@link google.analytics.admin.v1alpha.IosAppDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getIosAppDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetIosAppDataStreamRequest,
@@ -2564,11 +2480,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteIosAppDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteIosAppDataStreamRequest,
@@ -2669,11 +2581,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [IosAppDataStream]{@link google.analytics.admin.v1alpha.IosAppDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateIosAppDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateIosAppDataStreamRequest,
@@ -2774,11 +2682,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [IosAppDataStream]{@link google.analytics.admin.v1alpha.IosAppDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createIosAppDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   createIosAppDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateIosAppDataStreamRequest,
@@ -2881,11 +2785,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [AndroidAppDataStream]{@link google.analytics.admin.v1alpha.AndroidAppDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getAndroidAppDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IGetAndroidAppDataStreamRequest,
@@ -2985,11 +2885,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteAndroidAppDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IDeleteAndroidAppDataStreamRequest,
@@ -3090,11 +2986,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [AndroidAppDataStream]{@link google.analytics.admin.v1alpha.AndroidAppDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateAndroidAppDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.IUpdateAndroidAppDataStreamRequest,
@@ -3195,11 +3087,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [AndroidAppDataStream]{@link google.analytics.admin.v1alpha.AndroidAppDataStream}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createAndroidAppDataStream(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   createAndroidAppDataStream(
     request: protos.google.analytics.admin.v1alpha.ICreateAndroidAppDataStreamRequest,
@@ -3303,11 +3191,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [EnhancedMeasurementSettings]{@link google.analytics.admin.v1alpha.EnhancedMeasurementSettings}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getEnhancedMeasurementSettings(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getEnhancedMeasurementSettings(
     request: protos.google.analytics.admin.v1alpha.IGetEnhancedMeasurementSettingsRequest,
@@ -3410,11 +3294,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [EnhancedMeasurementSettings]{@link google.analytics.admin.v1alpha.EnhancedMeasurementSettings}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateEnhancedMeasurementSettings(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateEnhancedMeasurementSettings(
     request: protos.google.analytics.admin.v1alpha.IUpdateEnhancedMeasurementSettingsRequest,
@@ -3518,11 +3398,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [FirebaseLink]{@link google.analytics.admin.v1alpha.FirebaseLink}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createFirebaseLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   createFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.ICreateFirebaseLinkRequest,
@@ -3618,11 +3494,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [FirebaseLink]{@link google.analytics.admin.v1alpha.FirebaseLink}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateFirebaseLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest,
@@ -3717,11 +3589,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteFirebaseLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteFirebaseLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteFirebaseLinkRequest,
@@ -3817,11 +3685,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [ListFirebaseLinksResponse]{@link google.analytics.admin.v1alpha.ListFirebaseLinksResponse}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.listFirebaseLinks(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listFirebaseLinks(
     request: protos.google.analytics.admin.v1alpha.IListFirebaseLinksRequest,
@@ -3919,11 +3783,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [GlobalSiteTag]{@link google.analytics.admin.v1alpha.GlobalSiteTag}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getGlobalSiteTag(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getGlobalSiteTag(
     request: protos.google.analytics.admin.v1alpha.IGetGlobalSiteTagRequest,
@@ -4019,11 +3879,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [GoogleAdsLink]{@link google.analytics.admin.v1alpha.GoogleAdsLink}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.createGoogleAdsLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   createGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.ICreateGoogleAdsLinkRequest,
@@ -4119,11 +3975,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [GoogleAdsLink]{@link google.analytics.admin.v1alpha.GoogleAdsLink}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateGoogleAdsLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   updateGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.IUpdateGoogleAdsLinkRequest,
@@ -4217,11 +4069,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.deleteGoogleAdsLink(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   deleteGoogleAdsLink(
     request: protos.google.analytics.admin.v1alpha.IDeleteGoogleAdsLinkRequest,
@@ -4318,11 +4166,7 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is an object representing [DataSharingSettings]{@link google.analytics.admin.v1alpha.DataSharingSettings}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.getDataSharingSettings(request);
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   getDataSharingSettings(
     request: protos.google.analytics.admin.v1alpha.IGetDataSharingSettingsRequest,
@@ -4434,14 +4278,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [Account]{@link google.analytics.admin.v1alpha.Account}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listAccountsAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [Account]{@link google.analytics.admin.v1alpha.Account} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListAccountsRequest]{@link google.analytics.admin.v1alpha.ListAccountsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListAccountsResponse]{@link google.analytics.admin.v1alpha.ListAccountsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listAccounts(
     request: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
@@ -4482,7 +4331,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listAccounts}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listAccounts} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {number} request.pageSize
@@ -4503,13 +4363,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [Account]{@link google.analytics.admin.v1alpha.Account} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listAccountsAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listAccountsStream(
     request?: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
@@ -4527,9 +4380,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `listAccounts`, but returns an iterable object.
+   * Equivalent to {@link listAccounts}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {number} request.pageSize
@@ -4549,18 +4403,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [Account]{@link google.analytics.admin.v1alpha.Account}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listAccountsAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listAccountsAsync(
     request?: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
@@ -4627,14 +4470,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [AccountSummary]{@link google.analytics.admin.v1alpha.AccountSummary}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listAccountSummariesAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [AccountSummary]{@link google.analytics.admin.v1alpha.AccountSummary} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListAccountSummariesRequest]{@link google.analytics.admin.v1alpha.ListAccountSummariesRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListAccountSummariesResponse]{@link google.analytics.admin.v1alpha.ListAccountSummariesResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listAccountSummaries(
     request: protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
@@ -4675,7 +4523,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listAccountSummaries}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listAccountSummaries} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {number} request.pageSize
@@ -4692,13 +4551,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [AccountSummary]{@link google.analytics.admin.v1alpha.AccountSummary} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listAccountSummariesAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listAccountSummariesStream(
     request?: protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
@@ -4716,9 +4568,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `listAccountSummaries`, but returns an iterable object.
+   * Equivalent to {@link listAccountSummaries}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {number} request.pageSize
@@ -4734,18 +4587,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [AccountSummary]{@link google.analytics.admin.v1alpha.AccountSummary}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listAccountSummariesAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listAccountSummariesAsync(
     request?: protos.google.analytics.admin.v1alpha.IListAccountSummariesRequest,
@@ -4833,14 +4675,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [Property]{@link google.analytics.admin.v1alpha.Property}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listPropertiesAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [Property]{@link google.analytics.admin.v1alpha.Property} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListPropertiesRequest]{@link google.analytics.admin.v1alpha.ListPropertiesRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListPropertiesResponse]{@link google.analytics.admin.v1alpha.ListPropertiesResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listProperties(
     request: protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
@@ -4881,7 +4728,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listProperties}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listProperties} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.filter
@@ -4914,13 +4772,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [Property]{@link google.analytics.admin.v1alpha.Property} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listPropertiesAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listPropertiesStream(
     request?: protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
@@ -4938,9 +4789,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `listProperties`, but returns an iterable object.
+   * Equivalent to {@link listProperties}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.filter
@@ -4972,18 +4824,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [Property]{@link google.analytics.admin.v1alpha.Property}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listPropertiesAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listPropertiesAsync(
     request?: protos.google.analytics.admin.v1alpha.IListPropertiesRequest,
@@ -5052,14 +4893,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [UserLink]{@link google.analytics.admin.v1alpha.UserLink}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listUserLinksAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [UserLink]{@link google.analytics.admin.v1alpha.UserLink} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListUserLinksRequest]{@link google.analytics.admin.v1alpha.ListUserLinksRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListUserLinksResponse]{@link google.analytics.admin.v1alpha.ListUserLinksResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listUserLinks(
     request: protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
@@ -5107,7 +4953,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listUserLinks}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listUserLinks} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -5126,13 +4983,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [UserLink]{@link google.analytics.admin.v1alpha.UserLink} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listUserLinksAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listUserLinksStream(
     request?: protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
@@ -5157,9 +5007,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `listUserLinks`, but returns an iterable object.
+   * Equivalent to {@link listUserLinks}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -5177,18 +5028,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [UserLink]{@link google.analytics.admin.v1alpha.UserLink}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listUserLinksAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listUserLinksAsync(
     request?: protos.google.analytics.admin.v1alpha.IListUserLinksRequest,
@@ -5272,14 +5112,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [AuditUserLink]{@link google.analytics.admin.v1alpha.AuditUserLink}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `auditUserLinksAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [AuditUserLink]{@link google.analytics.admin.v1alpha.AuditUserLink} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [AuditUserLinksRequest]{@link google.analytics.admin.v1alpha.AuditUserLinksRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [AuditUserLinksResponse]{@link google.analytics.admin.v1alpha.AuditUserLinksResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   auditUserLinks(
     request: protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
@@ -5327,7 +5172,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link auditUserLinks}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link auditUserLinks} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -5346,13 +5202,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [AuditUserLink]{@link google.analytics.admin.v1alpha.AuditUserLink} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `auditUserLinksAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   auditUserLinksStream(
     request?: protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
@@ -5377,9 +5226,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `auditUserLinks`, but returns an iterable object.
+   * Equivalent to {@link auditUserLinks}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -5397,18 +5247,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [AuditUserLink]{@link google.analytics.admin.v1alpha.AuditUserLink}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.auditUserLinksAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   auditUserLinksAsync(
     request?: protos.google.analytics.admin.v1alpha.IAuditUserLinksRequest,
@@ -5488,14 +5327,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [WebDataStream]{@link google.analytics.admin.v1alpha.WebDataStream}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listWebDataStreamsAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [WebDataStream]{@link google.analytics.admin.v1alpha.WebDataStream} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListWebDataStreamsRequest]{@link google.analytics.admin.v1alpha.ListWebDataStreamsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListWebDataStreamsResponse]{@link google.analytics.admin.v1alpha.ListWebDataStreamsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listWebDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
@@ -5543,7 +5387,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listWebDataStreams}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listWebDataStreams} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -5563,13 +5418,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [WebDataStream]{@link google.analytics.admin.v1alpha.WebDataStream} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listWebDataStreamsAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listWebDataStreamsStream(
     request?: protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
@@ -5594,9 +5442,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `listWebDataStreams`, but returns an iterable object.
+   * Equivalent to {@link listWebDataStreams}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -5615,18 +5464,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [WebDataStream]{@link google.analytics.admin.v1alpha.WebDataStream}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listWebDataStreamsAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listWebDataStreamsAsync(
     request?: protos.google.analytics.admin.v1alpha.IListWebDataStreamsRequest,
@@ -5706,14 +5544,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [IosAppDataStream]{@link google.analytics.admin.v1alpha.IosAppDataStream}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listIosAppDataStreamsAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [IosAppDataStream]{@link google.analytics.admin.v1alpha.IosAppDataStream} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListIosAppDataStreamsRequest]{@link google.analytics.admin.v1alpha.ListIosAppDataStreamsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListIosAppDataStreamsResponse]{@link google.analytics.admin.v1alpha.ListIosAppDataStreamsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listIosAppDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
@@ -5761,7 +5604,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listIosAppDataStreams}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listIosAppDataStreams} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -5781,13 +5635,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [IosAppDataStream]{@link google.analytics.admin.v1alpha.IosAppDataStream} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listIosAppDataStreamsAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listIosAppDataStreamsStream(
     request?: protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
@@ -5812,9 +5659,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `listIosAppDataStreams`, but returns an iterable object.
+   * Equivalent to {@link listIosAppDataStreams}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -5833,18 +5681,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [IosAppDataStream]{@link google.analytics.admin.v1alpha.IosAppDataStream}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listIosAppDataStreamsAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listIosAppDataStreamsAsync(
     request?: protos.google.analytics.admin.v1alpha.IListIosAppDataStreamsRequest,
@@ -5926,14 +5763,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [AndroidAppDataStream]{@link google.analytics.admin.v1alpha.AndroidAppDataStream}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listAndroidAppDataStreamsAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [AndroidAppDataStream]{@link google.analytics.admin.v1alpha.AndroidAppDataStream} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListAndroidAppDataStreamsRequest]{@link google.analytics.admin.v1alpha.ListAndroidAppDataStreamsRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListAndroidAppDataStreamsResponse]{@link google.analytics.admin.v1alpha.ListAndroidAppDataStreamsResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listAndroidAppDataStreams(
     request: protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
@@ -5985,7 +5827,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listAndroidAppDataStreams}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listAndroidAppDataStreams} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -6007,13 +5860,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [AndroidAppDataStream]{@link google.analytics.admin.v1alpha.AndroidAppDataStream} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listAndroidAppDataStreamsAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listAndroidAppDataStreamsStream(
     request?: protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
@@ -6038,9 +5884,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `listAndroidAppDataStreams`, but returns an iterable object.
+   * Equivalent to {@link listAndroidAppDataStreams}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -6061,18 +5908,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [AndroidAppDataStream]{@link google.analytics.admin.v1alpha.AndroidAppDataStream}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listAndroidAppDataStreamsAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listAndroidAppDataStreamsAsync(
     request?: protos.google.analytics.admin.v1alpha.IListAndroidAppDataStreamsRequest,
@@ -6152,14 +5988,19 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
    *   The first element of the array is Array of [GoogleAdsLink]{@link google.analytics.admin.v1alpha.GoogleAdsLink}.
-   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   The client library support auto-pagination by default: it will call the API as many
    *   times as needed and will merge results from all the pages into this array.
-   *   Note that it can affect your quota.
-   *   We recommend using `listGoogleAdsLinksAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
+   *
+   *   When autoPaginate: false is specified through options, the array has three elements.
+   *   The first element is Array of [GoogleAdsLink]{@link google.analytics.admin.v1alpha.GoogleAdsLink} that corresponds to
+   *   the one page received from the API server.
+   *   If the second element is not null it contains the request object of type [ListGoogleAdsLinksRequest]{@link google.analytics.admin.v1alpha.ListGoogleAdsLinksRequest}
+   *   that can be used to obtain the next page of the results.
+   *   If it is null, the next page does not exist.
+   *   The third element contains the raw response received from the API server. Its type is
+   *   [ListGoogleAdsLinksResponse]{@link google.analytics.admin.v1alpha.ListGoogleAdsLinksResponse}.
+   *
+   *   The promise has a method named "cancel" which cancels the ongoing API call.
    */
   listGoogleAdsLinks(
     request: protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
@@ -6207,7 +6048,18 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * Equivalent to {@link listGoogleAdsLinks}, but returns a NodeJS Stream object.
+   *
+   * This fetches the paged responses for {@link listGoogleAdsLinks} continuously
+   * and invokes the callback registered for 'data' event for each element in the
+   * responses.
+   *
+   * The returned object has 'end' method when no more elements are required.
+   *
+   * autoPaginate option will be ignored.
+   *
+   * @see {@link https://nodejs.org/api/stream.html}
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -6226,13 +6078,6 @@ export class AnalyticsAdminServiceClient {
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Stream}
    *   An object stream which emits an object representing [GoogleAdsLink]{@link google.analytics.admin.v1alpha.GoogleAdsLink} on 'data' event.
-   *   The client library will perform auto-pagination by default: it will call the API as many
-   *   times as needed. Note that it can affect your quota.
-   *   We recommend using `listGoogleAdsLinksAsync()`
-   *   method described below for async iteration which you can stop as needed.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
    */
   listGoogleAdsLinksStream(
     request?: protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
@@ -6257,9 +6102,10 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Equivalent to `listGoogleAdsLinks`, but returns an iterable object.
+   * Equivalent to {@link listGoogleAdsLinks}, but returns an iterable object.
    *
-   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * for-await-of syntax is used with the iterable to recursively get response element on-demand.
+   *
    * @param {Object} request
    *   The request object that will be sent.
    * @param {string} request.parent
@@ -6277,18 +6123,7 @@ export class AnalyticsAdminServiceClient {
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Object}
-   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
-   *   When you iterate the returned iterable, each element will be an object representing
-   *   [GoogleAdsLink]{@link google.analytics.admin.v1alpha.GoogleAdsLink}. The API will be called under the hood as needed, once per the page,
-   *   so you can stop the iteration when you don't need more results.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
-   *   for more details and examples.
-   * @example
-   * const iterable = client.listGoogleAdsLinksAsync(request);
-   * for await (const response of iterable) {
-   *   // process response
-   * }
+   *   An iterable Object that conforms to @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols.
    */
   listGoogleAdsLinksAsync(
     request?: protos.google.analytics.admin.v1alpha.IListGoogleAdsLinksRequest,
@@ -6757,10 +6592,9 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
-   * Terminate the gRPC channel and close the client.
+   * Terminate the GRPC channel and close the client.
    *
    * The client will no longer be usable and all future behavior is undefined.
-   * @returns {Promise} A promise that resolves when the client is closed.
    */
   close(): Promise<void> {
     this.initialize();
