@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.0.0](https://www.github.com/googleapis/nodejs-analytics-admin/compare/v2.0.3...v3.0.0) (2021-05-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove `CreateIosAppDataStream`, `CreateAndroidAppDataStream` methods from the API (#105)
+
+### Bug Fixes
+
+* **deps:** require google-gax v2.12.0 ([#110](https://www.github.com/googleapis/nodejs-analytics-admin/issues/110)) ([cec8b6a](https://www.github.com/googleapis/nodejs-analytics-admin/commit/cec8b6ae04200a57d90586cd58f2fe6d3c94f684))
+* remove `CreateIosAppDataStream`, `CreateAndroidAppDataStream` methods from the API ([#105](https://www.github.com/googleapis/nodejs-analytics-admin/issues/105)) ([c6c1883](https://www.github.com/googleapis/nodejs-analytics-admin/commit/c6c1883cdcdbeacce0112c7142758806078cd431))
+
 ### [2.0.3](https://www.github.com/googleapis/nodejs-analytics-admin/compare/v2.0.2...v2.0.3) (2021-03-08)
 
 
