@@ -1,5 +1,5 @@
 {
-  "client_documentation": "https://googleapis.dev/nodejs/analytics-admin/latest/index.html",
+  "client_documentation": "https://cloud.google.com/nodejs/docs/reference/admin/latest",
   "api_id": "analyticsadmin.googleapis.com",
   "distribution_name": "@google-analytics/admin",
   "release_level": "alpha",
