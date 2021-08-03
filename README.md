@@ -162,7 +162,7 @@ Apache Version 2.0
 
 See [LICENSE](https://github.com/googleapis/nodejs-analytics-admin/blob/master/LICENSE)
 
-[client-docs]: https://googleapis.dev/nodejs/analytics-admin/latest/index.html
+[client-docs]: https://cloud.google.com/nodejs/docs/reference/admin/latest
 [product-docs]: https://developers.google.com/analytics
 [shell_img]: https://gstatic.com/cloudssh/images/open-btn.png
 [projects]: https://console.cloud.google.com/project
