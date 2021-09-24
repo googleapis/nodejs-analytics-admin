@@ -186,9 +186,20 @@ export class AnalyticsAdminServiceClient {
       customMetricPathTemplate: new this._gaxModule.PathTemplate(
         'properties/{property}/customMetrics'
       ),
+      dataRetentionSettingsPathTemplate: new this._gaxModule.PathTemplate(
+        'properties/{property}/dataRetentionSettings'
+      ),
       dataSharingSettingsPathTemplate: new this._gaxModule.PathTemplate(
         'accounts/{account}/dataSharingSettings'
       ),
+      displayVideo360AdvertiserLinkPathTemplate:
+        new this._gaxModule.PathTemplate(
+          'properties/{property}/displayVideo360AdvertiserLinks/{display_video_360_advertiser_link}'
+        ),
+      displayVideo360AdvertiserLinkProposalPathTemplate:
+        new this._gaxModule.PathTemplate(
+          'properties/{property}/displayVideo360AdvertiserLinkProposals/{display_video_360_advertiser_link_proposal}'
+        ),
       enhancedMeasurementSettingsPathTemplate: new this._gaxModule.PathTemplate(
         'properties/{property}/webDataStreams/{web_data_stream}/enhancedMeasurementSettings'
       ),
@@ -290,6 +301,17 @@ export class AnalyticsAdminServiceClient {
         'nextPageToken',
         'conversionEvents'
       ),
+      listDisplayVideo360AdvertiserLinks: new this._gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'displayVideo360AdvertiserLinks'
+      ),
+      listDisplayVideo360AdvertiserLinkProposals:
+        new this._gaxModule.PageDescriptor(
+          'pageToken',
+          'nextPageToken',
+          'displayVideo360AdvertiserLinkProposals'
+        ),
       listCustomDimensions: new this._gaxModule.PageDescriptor(
         'pageToken',
         'nextPageToken',
@@ -390,7 +412,6 @@ export class AnalyticsAdminServiceClient {
       'getEnhancedMeasurementSettings',
       'updateEnhancedMeasurementSettings',
       'createFirebaseLink',
-      'updateFirebaseLink',
       'deleteFirebaseLink',
       'listFirebaseLinks',
       'getGlobalSiteTag',
@@ -411,6 +432,17 @@ export class AnalyticsAdminServiceClient {
       'getConversionEvent',
       'deleteConversionEvent',
       'listConversionEvents',
+      'getDisplayVideo360AdvertiserLink',
+      'listDisplayVideo360AdvertiserLinks',
+      'createDisplayVideo360AdvertiserLink',
+      'deleteDisplayVideo360AdvertiserLink',
+      'updateDisplayVideo360AdvertiserLink',
+      'getDisplayVideo360AdvertiserLinkProposal',
+      'listDisplayVideo360AdvertiserLinkProposals',
+      'createDisplayVideo360AdvertiserLinkProposal',
+      'deleteDisplayVideo360AdvertiserLinkProposal',
+      'approveDisplayVideo360AdvertiserLinkProposal',
+      'cancelDisplayVideo360AdvertiserLinkProposal',
       'createCustomDimension',
       'updateCustomDimension',
       'listCustomDimensions',
@@ -421,6 +453,8 @@ export class AnalyticsAdminServiceClient {
       'listCustomMetrics',
       'archiveCustomMetric',
       'getCustomMetric',
+      'getDataRetentionSettings',
+      'updateDataRetentionSettings',
     ];
     for (const methodName of analyticsAdminServiceStubMethods) {
       const callPromise = this.analyticsAdminServiceStub.then(
@@ -3408,107 +3442,6 @@ export class AnalyticsAdminServiceClient {
     this.initialize();
     return this.innerApiCalls.createFirebaseLink(request, options, callback);
   }
-  updateFirebaseLink(
-    request?: protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest,
-    options?: CallOptions
-  ): Promise<
-    [
-      protos.google.analytics.admin.v1alpha.IFirebaseLink,
-      (
-        | protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest
-        | undefined
-      ),
-      {} | undefined
-    ]
-  >;
-  updateFirebaseLink(
-    request: protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest,
-    options: CallOptions,
-    callback: Callback<
-      protos.google.analytics.admin.v1alpha.IFirebaseLink,
-      | protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  updateFirebaseLink(
-    request: protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest,
-    callback: Callback<
-      protos.google.analytics.admin.v1alpha.IFirebaseLink,
-      | protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): void;
-  /**
-   * Updates a FirebaseLink on a property
-   *
-   * @param {Object} request
-   *   The request object that will be sent.
-   * @param {google.analytics.admin.v1alpha.FirebaseLink} request.firebaseLink
-   *   Required. The Firebase link to update.
-   * @param {google.protobuf.FieldMask} request.updateMask
-   *   Required. The list of fields to be updated. Field names must be in snake case
-   *   (e.g., "field_to_update"). Omitted fields will not be updated. To replace
-   *   the entire entity, use one path with the string "*" to match all fields.
-   * @param {object} [options]
-   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
-   * @returns {Promise} - The promise which resolves to an array.
-   *   The first element of the array is an object representing [FirebaseLink]{@link google.analytics.admin.v1alpha.FirebaseLink}.
-   *   Please see the
-   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
-   *   for more details and examples.
-   * @example
-   * const [response] = await client.updateFirebaseLink(request);
-   */
-  updateFirebaseLink(
-    request?: protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest,
-    optionsOrCallback?:
-      | CallOptions
-      | Callback<
-          protos.google.analytics.admin.v1alpha.IFirebaseLink,
-          | protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest
-          | null
-          | undefined,
-          {} | null | undefined
-        >,
-    callback?: Callback<
-      protos.google.analytics.admin.v1alpha.IFirebaseLink,
-      | protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest
-      | null
-      | undefined,
-      {} | null | undefined
-    >
-  ): Promise<
-    [
-      protos.google.analytics.admin.v1alpha.IFirebaseLink,
-      (
-        | protos.google.analytics.admin.v1alpha.IUpdateFirebaseLinkRequest
-        | undefined
-      ),
-      {} | undefined
-    ]
-  > | void {
-    request = request || {};
-    let options: CallOptions;
-    if (typeof optionsOrCallback === 'function' && callback === undefined) {
-      callback = optionsOrCallback;
-      options = {};
-    } else {
-      options = optionsOrCallback as CallOptions;
-    }
-    options = options || {};
-    options.otherArgs = options.otherArgs || {};
-    options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers['x-goog-request-params'] =
-      gax.routingHeader.fromParams({
-        'firebase_link.name': request.firebaseLink!.name || '',
-      });
-    this.initialize();
-    return this.innerApiCalls.updateFirebaseLink(request, options, callback);
-  }
   deleteFirebaseLink(
     request?: protos.google.analytics.admin.v1alpha.IDeleteFirebaseLinkRequest,
     options?: CallOptions
@@ -5036,6 +4969,941 @@ export class AnalyticsAdminServiceClient {
     this.initialize();
     return this.innerApiCalls.deleteConversionEvent(request, options, callback);
   }
+  getDisplayVideo360AdvertiserLink(
+    request?: protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      (
+        | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  getDisplayVideo360AdvertiserLink(
+    request: protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  getDisplayVideo360AdvertiserLink(
+    request: protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Look up a single DisplayVideo360AdvertiserLink
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the DisplayVideo360AdvertiserLink to get.
+   *   Example format: properties/1234/displayVideo360AdvertiserLink/5678
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DisplayVideo360AdvertiserLink]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.getDisplayVideo360AdvertiserLink(request);
+   */
+  getDisplayVideo360AdvertiserLink(
+    request?: protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+          | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      (
+        | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.getDisplayVideo360AdvertiserLink(
+      request,
+      options,
+      callback
+    );
+  }
+  createDisplayVideo360AdvertiserLink(
+    request?: protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      (
+        | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  createDisplayVideo360AdvertiserLink(
+    request: protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  createDisplayVideo360AdvertiserLink(
+    request: protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Creates a DisplayVideo360AdvertiserLink.
+   * This can only be utilized by users who have proper authorization both on
+   * the Google Analytics property and on the Display & Video 360 advertiser.
+   * Users who do not have access to the Display & Video 360 advertiser should
+   * instead seek to create a DisplayVideo360LinkProposal.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Example format: properties/1234
+   * @param {google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink} request.displayVideo360AdvertiserLink
+   *   Required. The DisplayVideo360AdvertiserLink to create.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DisplayVideo360AdvertiserLink]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.createDisplayVideo360AdvertiserLink(request);
+   */
+  createDisplayVideo360AdvertiserLink(
+    request?: protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+          | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      (
+        | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.createDisplayVideo360AdvertiserLink(
+      request,
+      options,
+      callback
+    );
+  }
+  deleteDisplayVideo360AdvertiserLink(
+    request?: protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  deleteDisplayVideo360AdvertiserLink(
+    request: protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  deleteDisplayVideo360AdvertiserLink(
+    request: protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Deletes a DisplayVideo360AdvertiserLink on a property.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the DisplayVideo360AdvertiserLink to delete.
+   *   Example format: properties/1234/displayVideo360AdvertiserLinks/5678
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.deleteDisplayVideo360AdvertiserLink(request);
+   */
+  deleteDisplayVideo360AdvertiserLink(
+    request?: protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.protobuf.IEmpty,
+          | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.deleteDisplayVideo360AdvertiserLink(
+      request,
+      options,
+      callback
+    );
+  }
+  updateDisplayVideo360AdvertiserLink(
+    request?: protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      (
+        | protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  updateDisplayVideo360AdvertiserLink(
+    request: protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  updateDisplayVideo360AdvertiserLink(
+    request: protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Updates a DisplayVideo360AdvertiserLink on a property.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink} request.displayVideo360AdvertiserLink
+   *   The DisplayVideo360AdvertiserLink to update
+   * @param {google.protobuf.FieldMask} request.updateMask
+   *   Required. The list of fields to be updated. Omitted fields will not be updated.
+   *   To replace the entire entity, use one path with the string "*" to match
+   *   all fields.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DisplayVideo360AdvertiserLink]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.updateDisplayVideo360AdvertiserLink(request);
+   */
+  updateDisplayVideo360AdvertiserLink(
+    request?: protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+          | protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      | protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink,
+      (
+        | protos.google.analytics.admin.v1alpha.IUpdateDisplayVideo360AdvertiserLinkRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'display_video_360_advertiser_link.name':
+          request.displayVideo360AdvertiserLink!.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.updateDisplayVideo360AdvertiserLink(
+      request,
+      options,
+      callback
+    );
+  }
+  getDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      (
+        | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  getDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  getDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Lookup for a single DisplayVideo360AdvertiserLinkProposal.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the DisplayVideo360AdvertiserLinkProposal to get.
+   *   Example format: properties/1234/displayVideo360AdvertiserLinkProposals/5678
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DisplayVideo360AdvertiserLinkProposal]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.getDisplayVideo360AdvertiserLinkProposal(request);
+   */
+  getDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+          | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      (
+        | protos.google.analytics.admin.v1alpha.IGetDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.getDisplayVideo360AdvertiserLinkProposal(
+      request,
+      options,
+      callback
+    );
+  }
+  createDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      (
+        | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  createDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  createDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Creates a DisplayVideo360AdvertiserLinkProposal.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Example format: properties/1234
+   * @param {google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal} request.displayVideo360AdvertiserLinkProposal
+   *   Required. The DisplayVideo360AdvertiserLinkProposal to create.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DisplayVideo360AdvertiserLinkProposal]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.createDisplayVideo360AdvertiserLinkProposal(request);
+   */
+  createDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+          | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      (
+        | protos.google.analytics.admin.v1alpha.ICreateDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.createDisplayVideo360AdvertiserLinkProposal(
+      request,
+      options,
+      callback
+    );
+  }
+  deleteDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  deleteDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  deleteDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Deletes a DisplayVideo360AdvertiserLinkProposal on a property.
+   * This can only be used on cancelled proposals.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the DisplayVideo360AdvertiserLinkProposal to delete.
+   *   Example format: properties/1234/displayVideo360AdvertiserLinkProposals/5678
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.deleteDisplayVideo360AdvertiserLinkProposal(request);
+   */
+  deleteDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.protobuf.IEmpty,
+          | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.analytics.admin.v1alpha.IDeleteDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.deleteDisplayVideo360AdvertiserLinkProposal(
+      request,
+      options,
+      callback
+    );
+  }
+  approveDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalResponse,
+      (
+        | protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  approveDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalResponse,
+      | protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  approveDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalResponse,
+      | protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Approves a DisplayVideo360AdvertiserLinkProposal.
+   * The DisplayVideo360AdvertiserLinkProposal will be deleted and a new
+   * DisplayVideo360AdvertiserLink will be created.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the DisplayVideo360AdvertiserLinkProposal to approve.
+   *   Example format: properties/1234/displayVideo360AdvertiserLinkProposals/5678
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [ApproveDisplayVideo360AdvertiserLinkProposalResponse]{@link google.analytics.admin.v1alpha.ApproveDisplayVideo360AdvertiserLinkProposalResponse}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.approveDisplayVideo360AdvertiserLinkProposal(request);
+   */
+  approveDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalResponse,
+          | protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalResponse,
+      | protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalResponse,
+      (
+        | protos.google.analytics.admin.v1alpha.IApproveDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.approveDisplayVideo360AdvertiserLinkProposal(
+      request,
+      options,
+      callback
+    );
+  }
+  cancelDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      (
+        | protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  cancelDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  cancelDisplayVideo360AdvertiserLinkProposal(
+    request: protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Cancels a DisplayVideo360AdvertiserLinkProposal.
+   * Cancelling can mean either:
+   * - Declining a proposal initiated from Display & Video 360
+   * - Withdrawing a proposal initiated from Google Analytics
+   * After being cancelled, a proposal will eventually be deleted automatically.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the DisplayVideo360AdvertiserLinkProposal to cancel.
+   *   Example format: properties/1234/displayVideo360AdvertiserLinkProposals/5678
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DisplayVideo360AdvertiserLinkProposal]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.cancelDisplayVideo360AdvertiserLinkProposal(request);
+   */
+  cancelDisplayVideo360AdvertiserLinkProposal(
+    request?: protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+          | protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      | protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal,
+      (
+        | protos.google.analytics.admin.v1alpha.ICancelDisplayVideo360AdvertiserLinkProposalRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.cancelDisplayVideo360AdvertiserLinkProposal(
+      request,
+      options,
+      callback
+    );
+  }
   createCustomDimension(
     request?: protos.google.analytics.admin.v1alpha.ICreateCustomDimensionRequest,
     options?: CallOptions
@@ -5826,6 +6694,217 @@ export class AnalyticsAdminServiceClient {
     this.initialize();
     return this.innerApiCalls.getCustomMetric(request, options, callback);
   }
+  getDataRetentionSettings(
+    request?: protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      (
+        | protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  getDataRetentionSettings(
+    request: protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      | protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  getDataRetentionSettings(
+    request: protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      | protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Returns the singleton data retention settings for this property.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the settings to lookup.
+   *   Format:
+   *   properties/{property}/dataRetentionSettings
+   *   Example: "properties/1000/dataRetentionSettings"
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DataRetentionSettings]{@link google.analytics.admin.v1alpha.DataRetentionSettings}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.getDataRetentionSettings(request);
+   */
+  getDataRetentionSettings(
+    request?: protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+          | protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      | protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      (
+        | protos.google.analytics.admin.v1alpha.IGetDataRetentionSettingsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.getDataRetentionSettings(
+      request,
+      options,
+      callback
+    );
+  }
+  updateDataRetentionSettings(
+    request?: protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      (
+        | protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
+  updateDataRetentionSettings(
+    request: protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      | protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  updateDataRetentionSettings(
+    request: protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      | protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Updates the singleton data retention settings for this property.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {google.analytics.admin.v1alpha.DataRetentionSettings} request.dataRetentionSettings
+   *   Required. The settings to update.
+   *   The `name` field is used to identify the settings to be updated.
+   * @param {google.protobuf.FieldMask} request.updateMask
+   *   Required. The list of fields to be updated. Field names must be in snake case
+   *   (e.g., "field_to_update"). Omitted fields will not be updated. To replace
+   *   the entire entity, use one path with the string "*" to match all fields.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [DataRetentionSettings]{@link google.analytics.admin.v1alpha.DataRetentionSettings}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.updateDataRetentionSettings(request);
+   */
+  updateDataRetentionSettings(
+    request?: protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+          | protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      | protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDataRetentionSettings,
+      (
+        | protos.google.analytics.admin.v1alpha.IUpdateDataRetentionSettingsRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'data_retention_settings.name':
+          request.dataRetentionSettings!.name || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.updateDataRetentionSettings(
+      request,
+      options,
+      callback
+    );
+  }
 
   listAccounts(
     request?: protos.google.analytics.admin.v1alpha.IListAccountsRequest,
@@ -5968,7 +7047,8 @@ export class AnalyticsAdminServiceClient {
   ): Transform {
     request = request || {};
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listAccounts'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listAccounts.createStream(
       this.innerApiCalls.listAccounts as gax.GaxCall,
@@ -6020,7 +7100,8 @@ export class AnalyticsAdminServiceClient {
     request = request || {};
     options = options || {};
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listAccounts'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listAccounts.asyncIterate(
       this.innerApiCalls['listAccounts'] as GaxCall,
@@ -6157,7 +7238,8 @@ export class AnalyticsAdminServiceClient {
   ): Transform {
     request = request || {};
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listAccountSummaries'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listAccountSummaries.createStream(
       this.innerApiCalls.listAccountSummaries as gax.GaxCall,
@@ -6205,7 +7287,8 @@ export class AnalyticsAdminServiceClient {
     request = request || {};
     options = options || {};
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listAccountSummaries'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listAccountSummaries.asyncIterate(
       this.innerApiCalls['listAccountSummaries'] as GaxCall,
@@ -6383,7 +7466,8 @@ export class AnalyticsAdminServiceClient {
   ): Transform {
     request = request || {};
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listProperties'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listProperties.createStream(
       this.innerApiCalls.listProperties as gax.GaxCall,
@@ -6449,7 +7533,8 @@ export class AnalyticsAdminServiceClient {
     request = request || {};
     options = options || {};
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listProperties'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listProperties.asyncIterate(
       this.innerApiCalls['listProperties'] as GaxCall,
@@ -6602,7 +7687,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listUserLinks'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listUserLinks.createStream(
       this.innerApiCalls.listUserLinks as gax.GaxCall,
@@ -6658,7 +7744,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listUserLinks'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listUserLinks.asyncIterate(
       this.innerApiCalls['listUserLinks'] as GaxCall,
@@ -6819,7 +7906,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['auditUserLinks'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.auditUserLinks.createStream(
       this.innerApiCalls.auditUserLinks as gax.GaxCall,
@@ -6875,7 +7963,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['auditUserLinks'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.auditUserLinks.asyncIterate(
       this.innerApiCalls['auditUserLinks'] as GaxCall,
@@ -7033,7 +8122,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listWebDataStreams'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listWebDataStreams.createStream(
       this.innerApiCalls.listWebDataStreams as gax.GaxCall,
@@ -7090,7 +8180,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listWebDataStreams'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listWebDataStreams.asyncIterate(
       this.innerApiCalls['listWebDataStreams'] as GaxCall,
@@ -7248,7 +8339,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listIosAppDataStreams'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listIosAppDataStreams.createStream(
       this.innerApiCalls.listIosAppDataStreams as gax.GaxCall,
@@ -7305,7 +8397,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listIosAppDataStreams'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listIosAppDataStreams.asyncIterate(
       this.innerApiCalls['listIosAppDataStreams'] as GaxCall,
@@ -7471,7 +8564,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listAndroidAppDataStreams'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listAndroidAppDataStreams.createStream(
       this.innerApiCalls.listAndroidAppDataStreams as gax.GaxCall,
@@ -7530,7 +8624,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listAndroidAppDataStreams'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listAndroidAppDataStreams.asyncIterate(
       this.innerApiCalls['listAndroidAppDataStreams'] as GaxCall,
@@ -7686,7 +8781,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listFirebaseLinks'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listFirebaseLinks.createStream(
       this.innerApiCalls.listFirebaseLinks as gax.GaxCall,
@@ -7743,7 +8839,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listFirebaseLinks'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listFirebaseLinks.asyncIterate(
       this.innerApiCalls['listFirebaseLinks'] as GaxCall,
@@ -7896,7 +8993,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listGoogleAdsLinks'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listGoogleAdsLinks.createStream(
       this.innerApiCalls.listGoogleAdsLinks as gax.GaxCall,
@@ -7952,7 +9050,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listGoogleAdsLinks'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listGoogleAdsLinks.asyncIterate(
       this.innerApiCalls['listGoogleAdsLinks'] as GaxCall,
@@ -8116,7 +9215,9 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings =
+      this._defaults['listMeasurementProtocolSecrets'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listMeasurementProtocolSecrets.createStream(
       this.innerApiCalls.listMeasurementProtocolSecrets as gax.GaxCall,
@@ -8175,7 +9276,9 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings =
+      this._defaults['listMeasurementProtocolSecrets'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listMeasurementProtocolSecrets.asyncIterate(
       this.innerApiCalls['listMeasurementProtocolSecrets'] as GaxCall,
@@ -8363,7 +9466,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         account: request.account || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['searchChangeHistoryEvents'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.searchChangeHistoryEvents.createStream(
       this.innerApiCalls.searchChangeHistoryEvents as gax.GaxCall,
@@ -8434,7 +9538,8 @@ export class AnalyticsAdminServiceClient {
         account: request.account || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['searchChangeHistoryEvents'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.searchChangeHistoryEvents.asyncIterate(
       this.innerApiCalls['searchChangeHistoryEvents'] as GaxCall,
@@ -8589,7 +9694,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listConversionEvents'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listConversionEvents.createStream(
       this.innerApiCalls.listConversionEvents as gax.GaxCall,
@@ -8645,13 +9751,460 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listConversionEvents'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listConversionEvents.asyncIterate(
       this.innerApiCalls['listConversionEvents'] as GaxCall,
       request as unknown as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.analytics.admin.v1alpha.IConversionEvent>;
+  }
+  listDisplayVideo360AdvertiserLinks(
+    request?: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink[],
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest | null,
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksResponse
+    ]
+  >;
+  listDisplayVideo360AdvertiserLinks(
+    request: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+    options: CallOptions,
+    callback: PaginationCallback<
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+      | protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksResponse
+      | null
+      | undefined,
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink
+    >
+  ): void;
+  listDisplayVideo360AdvertiserLinks(
+    request: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+    callback: PaginationCallback<
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+      | protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksResponse
+      | null
+      | undefined,
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink
+    >
+  ): void;
+  /**
+   * Lists all DisplayVideo360AdvertiserLinks on a property.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Example format: properties/1234
+   * @param {number} request.pageSize
+   *   The maximum number of resources to return.
+   *   If unspecified, at most 50 resources will be returned.
+   *   The maximum value is 200 (higher values will be coerced to the maximum).
+   * @param {string} request.pageToken
+   *   A page token, received from a previous `ListDisplayVideo360AdvertiserLinks`
+   *   call. Provide this to retrieve the subsequent page.
+   *
+   *   When paginating, all other parameters provided to
+   *   `ListDisplayVideo360AdvertiserLinks` must match the call that provided the
+   *   page token.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [DisplayVideo360AdvertiserLink]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink}.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *   Note that it can affect your quota.
+   *   We recommend using `listDisplayVideo360AdvertiserLinksAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
+  listDisplayVideo360AdvertiserLinks(
+    request?: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | PaginationCallback<
+          protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+          | protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksResponse
+          | null
+          | undefined,
+          protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink
+        >,
+    callback?: PaginationCallback<
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+      | protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksResponse
+      | null
+      | undefined,
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink[],
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest | null,
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksResponse
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.listDisplayVideo360AdvertiserLinks(
+      request,
+      options,
+      callback
+    );
+  }
+
+  /**
+   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Example format: properties/1234
+   * @param {number} request.pageSize
+   *   The maximum number of resources to return.
+   *   If unspecified, at most 50 resources will be returned.
+   *   The maximum value is 200 (higher values will be coerced to the maximum).
+   * @param {string} request.pageToken
+   *   A page token, received from a previous `ListDisplayVideo360AdvertiserLinks`
+   *   call. Provide this to retrieve the subsequent page.
+   *
+   *   When paginating, all other parameters provided to
+   *   `ListDisplayVideo360AdvertiserLinks` must match the call that provided the
+   *   page token.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [DisplayVideo360AdvertiserLink]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink} on 'data' event.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed. Note that it can affect your quota.
+   *   We recommend using `listDisplayVideo360AdvertiserLinksAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
+  listDisplayVideo360AdvertiserLinksStream(
+    request?: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+    options?: CallOptions
+  ): Transform {
+    request = request || {};
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
+    const defaultCallSettings =
+      this._defaults['listDisplayVideo360AdvertiserLinks'];
+    const callSettings = defaultCallSettings.merge(options);
+    this.initialize();
+    return this.descriptors.page.listDisplayVideo360AdvertiserLinks.createStream(
+      this.innerApiCalls.listDisplayVideo360AdvertiserLinks as gax.GaxCall,
+      request,
+      callSettings
+    );
+  }
+
+  /**
+   * Equivalent to `listDisplayVideo360AdvertiserLinks`, but returns an iterable object.
+   *
+   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Example format: properties/1234
+   * @param {number} request.pageSize
+   *   The maximum number of resources to return.
+   *   If unspecified, at most 50 resources will be returned.
+   *   The maximum value is 200 (higher values will be coerced to the maximum).
+   * @param {string} request.pageToken
+   *   A page token, received from a previous `ListDisplayVideo360AdvertiserLinks`
+   *   call. Provide this to retrieve the subsequent page.
+   *
+   *   When paginating, all other parameters provided to
+   *   `ListDisplayVideo360AdvertiserLinks` must match the call that provided the
+   *   page token.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+   *   When you iterate the returned iterable, each element will be an object representing
+   *   [DisplayVideo360AdvertiserLink]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink}. The API will be called under the hood as needed, once per the page,
+   *   so you can stop the iteration when you don't need more results.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   * @example
+   * const iterable = client.listDisplayVideo360AdvertiserLinksAsync(request);
+   * for await (const response of iterable) {
+   *   // process response
+   * }
+   */
+  listDisplayVideo360AdvertiserLinksAsync(
+    request?: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinksRequest,
+    options?: CallOptions
+  ): AsyncIterable<protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink> {
+    request = request || {};
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
+    options = options || {};
+    const defaultCallSettings =
+      this._defaults['listDisplayVideo360AdvertiserLinks'];
+    const callSettings = defaultCallSettings.merge(options);
+    this.initialize();
+    return this.descriptors.page.listDisplayVideo360AdvertiserLinks.asyncIterate(
+      this.innerApiCalls['listDisplayVideo360AdvertiserLinks'] as GaxCall,
+      request as unknown as RequestType,
+      callSettings
+    ) as AsyncIterable<protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLink>;
+  }
+  listDisplayVideo360AdvertiserLinkProposals(
+    request?: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal[],
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest | null,
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsResponse
+    ]
+  >;
+  listDisplayVideo360AdvertiserLinkProposals(
+    request: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+    options: CallOptions,
+    callback: PaginationCallback<
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+      | protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsResponse
+      | null
+      | undefined,
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal
+    >
+  ): void;
+  listDisplayVideo360AdvertiserLinkProposals(
+    request: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+    callback: PaginationCallback<
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+      | protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsResponse
+      | null
+      | undefined,
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal
+    >
+  ): void;
+  /**
+   * Lists DisplayVideo360AdvertiserLinkProposals on a property.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Example format: properties/1234
+   * @param {number} request.pageSize
+   *   The maximum number of resources to return.
+   *   If unspecified, at most 50 resources will be returned.
+   *   The maximum value is 200 (higher values will be coerced to the maximum).
+   * @param {string} request.pageToken
+   *   A page token, received from a previous
+   *   `ListDisplayVideo360AdvertiserLinkProposals` call. Provide this to retrieve
+   *   the subsequent page.
+   *
+   *   When paginating, all other parameters provided to
+   *   `ListDisplayVideo360AdvertiserLinkProposals` must match the call that
+   *   provided the page token.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [DisplayVideo360AdvertiserLinkProposal]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal}.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *   Note that it can affect your quota.
+   *   We recommend using `listDisplayVideo360AdvertiserLinkProposalsAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
+  listDisplayVideo360AdvertiserLinkProposals(
+    request?: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | PaginationCallback<
+          protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+          | protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsResponse
+          | null
+          | undefined,
+          protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal
+        >,
+    callback?: PaginationCallback<
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+      | protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsResponse
+      | null
+      | undefined,
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal[],
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest | null,
+      protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsResponse
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.listDisplayVideo360AdvertiserLinkProposals(
+      request,
+      options,
+      callback
+    );
+  }
+
+  /**
+   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Example format: properties/1234
+   * @param {number} request.pageSize
+   *   The maximum number of resources to return.
+   *   If unspecified, at most 50 resources will be returned.
+   *   The maximum value is 200 (higher values will be coerced to the maximum).
+   * @param {string} request.pageToken
+   *   A page token, received from a previous
+   *   `ListDisplayVideo360AdvertiserLinkProposals` call. Provide this to retrieve
+   *   the subsequent page.
+   *
+   *   When paginating, all other parameters provided to
+   *   `ListDisplayVideo360AdvertiserLinkProposals` must match the call that
+   *   provided the page token.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [DisplayVideo360AdvertiserLinkProposal]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal} on 'data' event.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed. Note that it can affect your quota.
+   *   We recommend using `listDisplayVideo360AdvertiserLinkProposalsAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
+  listDisplayVideo360AdvertiserLinkProposalsStream(
+    request?: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+    options?: CallOptions
+  ): Transform {
+    request = request || {};
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
+    const defaultCallSettings =
+      this._defaults['listDisplayVideo360AdvertiserLinkProposals'];
+    const callSettings = defaultCallSettings.merge(options);
+    this.initialize();
+    return this.descriptors.page.listDisplayVideo360AdvertiserLinkProposals.createStream(
+      this.innerApiCalls
+        .listDisplayVideo360AdvertiserLinkProposals as gax.GaxCall,
+      request,
+      callSettings
+    );
+  }
+
+  /**
+   * Equivalent to `listDisplayVideo360AdvertiserLinkProposals`, but returns an iterable object.
+   *
+   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Example format: properties/1234
+   * @param {number} request.pageSize
+   *   The maximum number of resources to return.
+   *   If unspecified, at most 50 resources will be returned.
+   *   The maximum value is 200 (higher values will be coerced to the maximum).
+   * @param {string} request.pageToken
+   *   A page token, received from a previous
+   *   `ListDisplayVideo360AdvertiserLinkProposals` call. Provide this to retrieve
+   *   the subsequent page.
+   *
+   *   When paginating, all other parameters provided to
+   *   `ListDisplayVideo360AdvertiserLinkProposals` must match the call that
+   *   provided the page token.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+   *   When you iterate the returned iterable, each element will be an object representing
+   *   [DisplayVideo360AdvertiserLinkProposal]{@link google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal}. The API will be called under the hood as needed, once per the page,
+   *   so you can stop the iteration when you don't need more results.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   * @example
+   * const iterable = client.listDisplayVideo360AdvertiserLinkProposalsAsync(request);
+   * for await (const response of iterable) {
+   *   // process response
+   * }
+   */
+  listDisplayVideo360AdvertiserLinkProposalsAsync(
+    request?: protos.google.analytics.admin.v1alpha.IListDisplayVideo360AdvertiserLinkProposalsRequest,
+    options?: CallOptions
+  ): AsyncIterable<protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal> {
+    request = request || {};
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
+    options = options || {};
+    const defaultCallSettings =
+      this._defaults['listDisplayVideo360AdvertiserLinkProposals'];
+    const callSettings = defaultCallSettings.merge(options);
+    this.initialize();
+    return this.descriptors.page.listDisplayVideo360AdvertiserLinkProposals.asyncIterate(
+      this.innerApiCalls[
+        'listDisplayVideo360AdvertiserLinkProposals'
+      ] as GaxCall,
+      request as unknown as RequestType,
+      callSettings
+    ) as AsyncIterable<protos.google.analytics.admin.v1alpha.IDisplayVideo360AdvertiserLinkProposal>;
   }
   listCustomDimensions(
     request?: protos.google.analytics.admin.v1alpha.IListCustomDimensionsRequest,
@@ -8798,7 +10351,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listCustomDimensions'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listCustomDimensions.createStream(
       this.innerApiCalls.listCustomDimensions as gax.GaxCall,
@@ -8854,7 +10408,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listCustomDimensions'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listCustomDimensions.asyncIterate(
       this.innerApiCalls['listCustomDimensions'] as GaxCall,
@@ -9007,7 +10562,8 @@ export class AnalyticsAdminServiceClient {
       gax.routingHeader.fromParams({
         parent: request.parent || '',
       });
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listCustomMetrics'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listCustomMetrics.createStream(
       this.innerApiCalls.listCustomMetrics as gax.GaxCall,
@@ -9063,7 +10619,8 @@ export class AnalyticsAdminServiceClient {
         parent: request.parent || '',
       });
     options = options || {};
-    const callSettings = new gax.CallSettings(options);
+    const defaultCallSettings = this._defaults['listCustomMetrics'];
+    const callSettings = defaultCallSettings.merge(options);
     this.initialize();
     return this.descriptors.page.listCustomMetrics.asyncIterate(
       this.innerApiCalls['listCustomMetrics'] as GaxCall,
@@ -9295,6 +10852,33 @@ export class AnalyticsAdminServiceClient {
   }
 
   /**
+   * Return a fully-qualified dataRetentionSettings resource name string.
+   *
+   * @param {string} property
+   * @returns {string} Resource name string.
+   */
+  dataRetentionSettingsPath(property: string) {
+    return this.pathTemplates.dataRetentionSettingsPathTemplate.render({
+      property: property,
+    });
+  }
+
+  /**
+   * Parse the property from DataRetentionSettings resource.
+   *
+   * @param {string} dataRetentionSettingsName
+   *   A fully-qualified path representing DataRetentionSettings resource.
+   * @returns {string} A string representing the property.
+   */
+  matchPropertyFromDataRetentionSettingsName(
+    dataRetentionSettingsName: string
+  ) {
+    return this.pathTemplates.dataRetentionSettingsPathTemplate.match(
+      dataRetentionSettingsName
+    ).property;
+  }
+
+  /**
    * Return a fully-qualified dataSharingSettings resource name string.
    *
    * @param {string} account
@@ -9317,6 +10901,62 @@ export class AnalyticsAdminServiceClient {
     return this.pathTemplates.dataSharingSettingsPathTemplate.match(
       dataSharingSettingsName
     ).account;
+  }
+
+  /**
+   * Return a fully-qualified displayVideo360AdvertiserLink resource name string.
+   *
+   * @param {string} property
+   * @returns {string} Resource name string.
+   */
+  displayVideo360AdvertiserLinkPath(property: string) {
+    return this.pathTemplates.displayVideo360AdvertiserLinkPathTemplate.render({
+      property: property,
+    });
+  }
+
+  /**
+   * Parse the property from DisplayVideo360AdvertiserLink resource.
+   *
+   * @param {string} displayVideo360AdvertiserLinkName
+   *   A fully-qualified path representing DisplayVideo360AdvertiserLink resource.
+   * @returns {string} A string representing the property.
+   */
+  matchPropertyFromDisplayVideo360AdvertiserLinkName(
+    displayVideo360AdvertiserLinkName: string
+  ) {
+    return this.pathTemplates.displayVideo360AdvertiserLinkPathTemplate.match(
+      displayVideo360AdvertiserLinkName
+    ).property;
+  }
+
+  /**
+   * Return a fully-qualified displayVideo360AdvertiserLinkProposal resource name string.
+   *
+   * @param {string} property
+   * @returns {string} Resource name string.
+   */
+  displayVideo360AdvertiserLinkProposalPath(property: string) {
+    return this.pathTemplates.displayVideo360AdvertiserLinkProposalPathTemplate.render(
+      {
+        property: property,
+      }
+    );
+  }
+
+  /**
+   * Parse the property from DisplayVideo360AdvertiserLinkProposal resource.
+   *
+   * @param {string} displayVideo360AdvertiserLinkProposalName
+   *   A fully-qualified path representing DisplayVideo360AdvertiserLinkProposal resource.
+   * @returns {string} A string representing the property.
+   */
+  matchPropertyFromDisplayVideo360AdvertiserLinkProposalName(
+    displayVideo360AdvertiserLinkProposalName: string
+  ) {
+    return this.pathTemplates.displayVideo360AdvertiserLinkProposalPathTemplate.match(
+      displayVideo360AdvertiserLinkProposalName
+    ).property;
   }
 
   /**
