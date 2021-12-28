@@ -12,5 +12,5 @@
   "name": "analytics-admin",
   "issue_tracker": "",
   "api_shortname": "analytics-admin",
-  "library_type": ""
+  "library_type": "GAPIC_AUTO"
 }
