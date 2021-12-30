@@ -1,5 +1,25 @@
 # Changelog
 
+## [4.0.0](https://www.github.com/googleapis/nodejs-analytics-admin/compare/v3.1.0...v4.0.0) (2021-12-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove `GetEnhancedMeasurementSettings`, `UpdateEnhancedMeasurementSettingsRequest`, `UpdateEnhancedMeasurementSettingsRequest` operations from the API
+
+### Features
+
+* add `CreateDataStream`, `DeleteDataStream`, `UpdateDataStream`, `ListDataStreams` operations to support the new `DataStream` resource ([33ead79](https://www.github.com/googleapis/nodejs-analytics-admin/commit/33ead795301a343a80af8f8838c7677679b9f3fe))
+* add `DISPLAY_VIDEO_360_ADVERTISER_LINK`,  `DISPLAY_VIDEO_360_ADVERTISER_LINK_PROPOSAL` fields to `ChangeHistoryResourceType` enum ([33ead79](https://www.github.com/googleapis/nodejs-analytics-admin/commit/33ead795301a343a80af8f8838c7677679b9f3fe))
+* add the `account` field to the `Property` type docs: update the documentation with a new list of valid values for `UserLink.direct_roles` field ([33ead79](https://www.github.com/googleapis/nodejs-analytics-admin/commit/33ead795301a343a80af8f8838c7677679b9f3fe))
+* add the `AcknowledgeUserDataCollection` operation which acknowledges the terms of user data collection for the specified property ([#166](https://www.github.com/googleapis/nodejs-analytics-admin/issues/166)) ([33ead79](https://www.github.com/googleapis/nodejs-analytics-admin/commit/33ead795301a343a80af8f8838c7677679b9f3fe))
+* add the new resource type `DataStream`, which is planned to eventually replace `WebDataStream`, `IosAppDataStream`, `AndroidAppDataStream` resources ([33ead79](https://www.github.com/googleapis/nodejs-analytics-admin/commit/33ead795301a343a80af8f8838c7677679b9f3fe))
+
+
+### Bug Fixes
+
+* remove `GetEnhancedMeasurementSettings`, `UpdateEnhancedMeasurementSettingsRequest`, `UpdateEnhancedMeasurementSettingsRequest` operations from the API ([33ead79](https://www.github.com/googleapis/nodejs-analytics-admin/commit/33ead795301a343a80af8f8838c7677679b9f3fe))
+
 ## [3.1.0](https://www.github.com/googleapis/nodejs-analytics-admin/compare/v3.0.6...v3.1.0) (2021-08-23)
 
 
