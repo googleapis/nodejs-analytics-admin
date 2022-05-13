@@ -1044,497 +1044,497 @@ export namespace google {
                 namespace AnalyticsAdminService {
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getAccount}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getAccount}.
                      * @param error Error, if any
                      * @param [response] Account
                      */
                     type GetAccountCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.Account) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listAccounts}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listAccounts}.
                      * @param error Error, if any
                      * @param [response] ListAccountsResponse
                      */
                     type ListAccountsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListAccountsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteAccount}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteAccount}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteAccountCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateAccount}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateAccount}.
                      * @param error Error, if any
                      * @param [response] Account
                      */
                     type UpdateAccountCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.Account) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|provisionAccountTicket}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#provisionAccountTicket}.
                      * @param error Error, if any
                      * @param [response] ProvisionAccountTicketResponse
                      */
                     type ProvisionAccountTicketCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ProvisionAccountTicketResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listAccountSummaries}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listAccountSummaries}.
                      * @param error Error, if any
                      * @param [response] ListAccountSummariesResponse
                      */
                     type ListAccountSummariesCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListAccountSummariesResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getProperty}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getProperty}.
                      * @param error Error, if any
                      * @param [response] Property
                      */
                     type GetPropertyCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.Property) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listProperties}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listProperties}.
                      * @param error Error, if any
                      * @param [response] ListPropertiesResponse
                      */
                     type ListPropertiesCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListPropertiesResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createProperty}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createProperty}.
                      * @param error Error, if any
                      * @param [response] Property
                      */
                     type CreatePropertyCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.Property) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteProperty}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteProperty}.
                      * @param error Error, if any
                      * @param [response] Property
                      */
                     type DeletePropertyCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.Property) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateProperty}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateProperty}.
                      * @param error Error, if any
                      * @param [response] Property
                      */
                     type UpdatePropertyCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.Property) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getUserLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getUserLink}.
                      * @param error Error, if any
                      * @param [response] UserLink
                      */
                     type GetUserLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.UserLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|batchGetUserLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#batchGetUserLinks}.
                      * @param error Error, if any
                      * @param [response] BatchGetUserLinksResponse
                      */
                     type BatchGetUserLinksCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.BatchGetUserLinksResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listUserLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listUserLinks}.
                      * @param error Error, if any
                      * @param [response] ListUserLinksResponse
                      */
                     type ListUserLinksCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListUserLinksResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|auditUserLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#auditUserLinks}.
                      * @param error Error, if any
                      * @param [response] AuditUserLinksResponse
                      */
                     type AuditUserLinksCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.AuditUserLinksResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createUserLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createUserLink}.
                      * @param error Error, if any
                      * @param [response] UserLink
                      */
                     type CreateUserLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.UserLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|batchCreateUserLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#batchCreateUserLinks}.
                      * @param error Error, if any
                      * @param [response] BatchCreateUserLinksResponse
                      */
                     type BatchCreateUserLinksCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.BatchCreateUserLinksResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateUserLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateUserLink}.
                      * @param error Error, if any
                      * @param [response] UserLink
                      */
                     type UpdateUserLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.UserLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|batchUpdateUserLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#batchUpdateUserLinks}.
                      * @param error Error, if any
                      * @param [response] BatchUpdateUserLinksResponse
                      */
                     type BatchUpdateUserLinksCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.BatchUpdateUserLinksResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteUserLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteUserLink}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteUserLinkCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|batchDeleteUserLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#batchDeleteUserLinks}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type BatchDeleteUserLinksCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createFirebaseLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createFirebaseLink}.
                      * @param error Error, if any
                      * @param [response] FirebaseLink
                      */
                     type CreateFirebaseLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.FirebaseLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteFirebaseLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteFirebaseLink}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteFirebaseLinkCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listFirebaseLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listFirebaseLinks}.
                      * @param error Error, if any
                      * @param [response] ListFirebaseLinksResponse
                      */
                     type ListFirebaseLinksCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListFirebaseLinksResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getGlobalSiteTag}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getGlobalSiteTag}.
                      * @param error Error, if any
                      * @param [response] GlobalSiteTag
                      */
                     type GetGlobalSiteTagCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.GlobalSiteTag) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createGoogleAdsLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createGoogleAdsLink}.
                      * @param error Error, if any
                      * @param [response] GoogleAdsLink
                      */
                     type CreateGoogleAdsLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.GoogleAdsLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateGoogleAdsLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateGoogleAdsLink}.
                      * @param error Error, if any
                      * @param [response] GoogleAdsLink
                      */
                     type UpdateGoogleAdsLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.GoogleAdsLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteGoogleAdsLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteGoogleAdsLink}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteGoogleAdsLinkCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listGoogleAdsLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listGoogleAdsLinks}.
                      * @param error Error, if any
                      * @param [response] ListGoogleAdsLinksResponse
                      */
                     type ListGoogleAdsLinksCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListGoogleAdsLinksResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getDataSharingSettings}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getDataSharingSettings}.
                      * @param error Error, if any
                      * @param [response] DataSharingSettings
                      */
                     type GetDataSharingSettingsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DataSharingSettings) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getMeasurementProtocolSecret}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getMeasurementProtocolSecret}.
                      * @param error Error, if any
                      * @param [response] MeasurementProtocolSecret
                      */
                     type GetMeasurementProtocolSecretCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.MeasurementProtocolSecret) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listMeasurementProtocolSecrets}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listMeasurementProtocolSecrets}.
                      * @param error Error, if any
                      * @param [response] ListMeasurementProtocolSecretsResponse
                      */
                     type ListMeasurementProtocolSecretsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListMeasurementProtocolSecretsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createMeasurementProtocolSecret}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createMeasurementProtocolSecret}.
                      * @param error Error, if any
                      * @param [response] MeasurementProtocolSecret
                      */
                     type CreateMeasurementProtocolSecretCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.MeasurementProtocolSecret) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteMeasurementProtocolSecret}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteMeasurementProtocolSecret}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteMeasurementProtocolSecretCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateMeasurementProtocolSecret}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateMeasurementProtocolSecret}.
                      * @param error Error, if any
                      * @param [response] MeasurementProtocolSecret
                      */
                     type UpdateMeasurementProtocolSecretCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.MeasurementProtocolSecret) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|acknowledgeUserDataCollection}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#acknowledgeUserDataCollection}.
                      * @param error Error, if any
                      * @param [response] AcknowledgeUserDataCollectionResponse
                      */
                     type AcknowledgeUserDataCollectionCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.AcknowledgeUserDataCollectionResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|searchChangeHistoryEvents}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#searchChangeHistoryEvents}.
                      * @param error Error, if any
                      * @param [response] SearchChangeHistoryEventsResponse
                      */
                     type SearchChangeHistoryEventsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.SearchChangeHistoryEventsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getGoogleSignalsSettings}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getGoogleSignalsSettings}.
                      * @param error Error, if any
                      * @param [response] GoogleSignalsSettings
                      */
                     type GetGoogleSignalsSettingsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.GoogleSignalsSettings) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateGoogleSignalsSettings}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateGoogleSignalsSettings}.
                      * @param error Error, if any
                      * @param [response] GoogleSignalsSettings
                      */
                     type UpdateGoogleSignalsSettingsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.GoogleSignalsSettings) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createConversionEvent}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createConversionEvent}.
                      * @param error Error, if any
                      * @param [response] ConversionEvent
                      */
                     type CreateConversionEventCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ConversionEvent) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getConversionEvent}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getConversionEvent}.
                      * @param error Error, if any
                      * @param [response] ConversionEvent
                      */
                     type GetConversionEventCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ConversionEvent) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteConversionEvent}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteConversionEvent}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteConversionEventCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listConversionEvents}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listConversionEvents}.
                      * @param error Error, if any
                      * @param [response] ListConversionEventsResponse
                      */
                     type ListConversionEventsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListConversionEventsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getDisplayVideo360AdvertiserLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getDisplayVideo360AdvertiserLink}.
                      * @param error Error, if any
                      * @param [response] DisplayVideo360AdvertiserLink
                      */
                     type GetDisplayVideo360AdvertiserLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listDisplayVideo360AdvertiserLinks}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listDisplayVideo360AdvertiserLinks}.
                      * @param error Error, if any
                      * @param [response] ListDisplayVideo360AdvertiserLinksResponse
                      */
                     type ListDisplayVideo360AdvertiserLinksCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListDisplayVideo360AdvertiserLinksResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createDisplayVideo360AdvertiserLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createDisplayVideo360AdvertiserLink}.
                      * @param error Error, if any
                      * @param [response] DisplayVideo360AdvertiserLink
                      */
                     type CreateDisplayVideo360AdvertiserLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteDisplayVideo360AdvertiserLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteDisplayVideo360AdvertiserLink}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteDisplayVideo360AdvertiserLinkCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateDisplayVideo360AdvertiserLink}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateDisplayVideo360AdvertiserLink}.
                      * @param error Error, if any
                      * @param [response] DisplayVideo360AdvertiserLink
                      */
                     type UpdateDisplayVideo360AdvertiserLinkCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLink) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getDisplayVideo360AdvertiserLinkProposal}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getDisplayVideo360AdvertiserLinkProposal}.
                      * @param error Error, if any
                      * @param [response] DisplayVideo360AdvertiserLinkProposal
                      */
                     type GetDisplayVideo360AdvertiserLinkProposalCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listDisplayVideo360AdvertiserLinkProposals}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listDisplayVideo360AdvertiserLinkProposals}.
                      * @param error Error, if any
                      * @param [response] ListDisplayVideo360AdvertiserLinkProposalsResponse
                      */
                     type ListDisplayVideo360AdvertiserLinkProposalsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListDisplayVideo360AdvertiserLinkProposalsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createDisplayVideo360AdvertiserLinkProposal}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createDisplayVideo360AdvertiserLinkProposal}.
                      * @param error Error, if any
                      * @param [response] DisplayVideo360AdvertiserLinkProposal
                      */
                     type CreateDisplayVideo360AdvertiserLinkProposalCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteDisplayVideo360AdvertiserLinkProposal}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteDisplayVideo360AdvertiserLinkProposal}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteDisplayVideo360AdvertiserLinkProposalCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|approveDisplayVideo360AdvertiserLinkProposal}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#approveDisplayVideo360AdvertiserLinkProposal}.
                      * @param error Error, if any
                      * @param [response] ApproveDisplayVideo360AdvertiserLinkProposalResponse
                      */
                     type ApproveDisplayVideo360AdvertiserLinkProposalCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ApproveDisplayVideo360AdvertiserLinkProposalResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|cancelDisplayVideo360AdvertiserLinkProposal}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#cancelDisplayVideo360AdvertiserLinkProposal}.
                      * @param error Error, if any
                      * @param [response] DisplayVideo360AdvertiserLinkProposal
                      */
                     type CancelDisplayVideo360AdvertiserLinkProposalCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DisplayVideo360AdvertiserLinkProposal) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createCustomDimension}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createCustomDimension}.
                      * @param error Error, if any
                      * @param [response] CustomDimension
                      */
                     type CreateCustomDimensionCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.CustomDimension) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateCustomDimension}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateCustomDimension}.
                      * @param error Error, if any
                      * @param [response] CustomDimension
                      */
                     type UpdateCustomDimensionCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.CustomDimension) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listCustomDimensions}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listCustomDimensions}.
                      * @param error Error, if any
                      * @param [response] ListCustomDimensionsResponse
                      */
                     type ListCustomDimensionsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListCustomDimensionsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|archiveCustomDimension}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#archiveCustomDimension}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type ArchiveCustomDimensionCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getCustomDimension}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getCustomDimension}.
                      * @param error Error, if any
                      * @param [response] CustomDimension
                      */
                     type GetCustomDimensionCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.CustomDimension) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createCustomMetric}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createCustomMetric}.
                      * @param error Error, if any
                      * @param [response] CustomMetric
                      */
                     type CreateCustomMetricCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.CustomMetric) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateCustomMetric}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateCustomMetric}.
                      * @param error Error, if any
                      * @param [response] CustomMetric
                      */
                     type UpdateCustomMetricCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.CustomMetric) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listCustomMetrics}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listCustomMetrics}.
                      * @param error Error, if any
                      * @param [response] ListCustomMetricsResponse
                      */
                     type ListCustomMetricsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListCustomMetricsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|archiveCustomMetric}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#archiveCustomMetric}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type ArchiveCustomMetricCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getCustomMetric}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getCustomMetric}.
                      * @param error Error, if any
                      * @param [response] CustomMetric
                      */
                     type GetCustomMetricCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.CustomMetric) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getDataRetentionSettings}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getDataRetentionSettings}.
                      * @param error Error, if any
                      * @param [response] DataRetentionSettings
                      */
                     type GetDataRetentionSettingsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DataRetentionSettings) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateDataRetentionSettings}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateDataRetentionSettings}.
                      * @param error Error, if any
                      * @param [response] DataRetentionSettings
                      */
                     type UpdateDataRetentionSettingsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DataRetentionSettings) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|createDataStream}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#createDataStream}.
                      * @param error Error, if any
                      * @param [response] DataStream
                      */
                     type CreateDataStreamCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DataStream) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|deleteDataStream}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#deleteDataStream}.
                      * @param error Error, if any
                      * @param [response] Empty
                      */
                     type DeleteDataStreamCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|updateDataStream}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#updateDataStream}.
                      * @param error Error, if any
                      * @param [response] DataStream
                      */
                     type UpdateDataStreamCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.DataStream) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|listDataStreams}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#listDataStreams}.
                      * @param error Error, if any
                      * @param [response] ListDataStreamsResponse
                      */
                     type ListDataStreamsCallback = (error: (Error|null), response?: google.analytics.admin.v1alpha.ListDataStreamsResponse) => void;
 
                     /**
-                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService|getDataStream}.
+                     * Callback as used by {@link google.analytics.admin.v1alpha.AnalyticsAdminService#getDataStream}.
                      * @param error Error, if any
                      * @param [response] DataStream
                      */
@@ -15887,9 +15887,6 @@ export namespace google {
             /** FieldOptions lazy */
             lazy?: (boolean|null);
 
-            /** FieldOptions unverifiedLazy */
-            unverifiedLazy?: (boolean|null);
-
             /** FieldOptions deprecated */
             deprecated?: (boolean|null);
 
@@ -15926,9 +15923,6 @@ export namespace google {
 
             /** FieldOptions lazy. */
             public lazy: boolean;
-
-            /** FieldOptions unverifiedLazy. */
-            public unverifiedLazy: boolean;
 
             /** FieldOptions deprecated. */
             public deprecated: boolean;
