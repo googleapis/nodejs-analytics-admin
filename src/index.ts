@@ -17,11 +17,12 @@
 // ** All changes to this file may be overwritten. **
 
 import * as v1alpha from './v1alpha';
+import * as v1beta from './v1beta';
 
 const AnalyticsAdminServiceClient = v1alpha.AnalyticsAdminServiceClient;
 type AnalyticsAdminServiceClient = v1alpha.AnalyticsAdminServiceClient;
 
-export {v1alpha, AnalyticsAdminServiceClient};
-export default {v1alpha, AnalyticsAdminServiceClient};
+export {v1alpha, v1beta, AnalyticsAdminServiceClient};
+export default {v1alpha, v1beta, AnalyticsAdminServiceClient};
 import * as protos from '../protos/protos';
 export {protos};
