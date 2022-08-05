@@ -320,6 +320,11 @@
                 "updateAttributionSettings"
               ]
             },
+            "RunAccessReport": {
+              "methods": [
+                "runAccessReport"
+              ]
+            },
             "ListAccounts": {
               "methods": [
                 "listAccounts",
@@ -745,6 +750,11 @@
             "UpdateAttributionSettings": {
               "methods": [
                 "updateAttributionSettings"
+              ]
+            },
+            "RunAccessReport": {
+              "methods": [
+                "runAccessReport"
               ]
             },
             "ListAccounts": {

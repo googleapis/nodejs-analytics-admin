@@ -444,6 +444,7 @@ export class AnalyticsAdminServiceClient {
       'archiveAudience',
       'getAttributionSettings',
       'updateAttributionSettings',
+      'runAccessReport',
     ];
     for (const methodName of analyticsAdminServiceStubMethods) {
       const callPromise = this.analyticsAdminServiceStub.then(
@@ -6739,6 +6740,167 @@ export class AnalyticsAdminServiceClient {
       options,
       callback
     );
+  }
+  /**
+   * Returns a customized report of data access records. The report provides
+   * records of each time a user reads Google Analytics reporting data. Access
+   * records are retained for up to 2 years.
+   *
+   * Data Access Reports can be requested for a property. The property must be
+   * in Google Analytics 360. This method is only available to Administrators.
+   *
+   * These data access records include GA4 UI Reporting, GA4 UI Explorations,
+   * GA4 Data API, and other products like Firebase & Admob that can retrieve
+   * data from Google Analytics through a linkage. These records don't include
+   * property configuration changes like adding a stream or changing a
+   * property's time zone. For configuration change history, see
+   * [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.entity
+   *   The Data Access Report is requested for this property.
+   *   For example if "123" is your GA4 property ID, then entity should be
+   *   "properties/123".
+   * @param {number[]} request.dimensions
+   *   The dimensions requested and displayed in the response. Requests are
+   *   allowed up to 9 dimensions.
+   * @param {number[]} request.metrics
+   *   The metrics requested and displayed in the response. Requests are allowed
+   *   up to 10 metrics.
+   * @param {number[]} request.dateRanges
+   *   Date ranges of access records to read. If multiple date ranges are
+   *   requested, each response row will contain a zero based date range index. If
+   *   two date ranges overlap, the access records for the overlapping days is
+   *   included in the response rows for both date ranges. Requests are allowed up
+   *   to 2 date ranges.
+   * @param {google.analytics.admin.v1alpha.AccessFilterExpression} request.dimensionFilter
+   *   Dimension filters allow you to restrict report response to specific
+   *   dimension values which match the filter. For example, filtering on access
+   *   records of a single user. To learn more, see [Fundamentals of Dimension
+   *   Filters](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#dimension_filters)
+   *   for examples. Metrics cannot be used in this filter.
+   * @param {google.analytics.admin.v1alpha.AccessFilterExpression} request.metricFilter
+   *   Metric filters allow you to restrict report response to specific metric
+   *   values which match the filter. Metric filters are applied after aggregating
+   *   the report's rows, similar to SQL having-clause. Dimensions cannot be used
+   *   in this filter.
+   * @param {number} request.offset
+   *   The row count of the start row. The first row is counted as row 0. If
+   *   offset is unspecified, it is treated as 0. If offset is zero, then this
+   *   method will return the first page of results with `limit` entries.
+   *
+   *   To learn more about this pagination parameter, see
+   *   [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
+   * @param {number} request.limit
+   *   The number of rows to return. If unspecified, 10,000 rows are returned. The
+   *   API returns a maximum of 100,000 rows per request, no matter how many you
+   *   ask for. `limit` must be positive.
+   *
+   *   The API may return fewer rows than the requested `limit`, if there aren't
+   *   as many remaining rows as the `limit`. For instance, there are fewer than
+   *   300 possible values for the dimension `country`, so when reporting on only
+   *   `country`, you can't get more than 300 rows, even if you set `limit` to a
+   *   higher value.
+   *
+   *   To learn more about this pagination parameter, see
+   *   [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
+   * @param {string} request.timeZone
+   *   This request's time zone if specified. If unspecified, the property's time
+   *   zone is used. The request's time zone is used to interpret the start & end
+   *   dates of the report.
+   *
+   *   Formatted as strings from the IANA Time Zone database
+   *   (https://www.iana.org/time-zones); for example "America/New_York" or
+   *   "Asia/Tokyo".
+   * @param {number[]} request.orderBys
+   *   Specifies how rows are ordered in the response.
+   * @param {boolean} request.returnEntityQuota
+   *   Toggles whether to return the current state of this Analytics Property's
+   *   quota. Quota is returned in [AccessQuota](#AccessQuota).
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [RunAccessReportResponse]{@link google.analytics.admin.v1alpha.RunAccessReportResponse}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example <caption>include:samples/generated/v1alpha/analytics_admin_service.run_access_report.js</caption>
+   * region_tag:analyticsadmin_v1alpha_generated_AnalyticsAdminService_RunAccessReport_async
+   */
+  runAccessReport(
+    request?: protos.google.analytics.admin.v1alpha.IRunAccessReportRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IRunAccessReportResponse,
+      protos.google.analytics.admin.v1alpha.IRunAccessReportRequest | undefined,
+      {} | undefined
+    ]
+  >;
+  runAccessReport(
+    request: protos.google.analytics.admin.v1alpha.IRunAccessReportRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IRunAccessReportResponse,
+      | protos.google.analytics.admin.v1alpha.IRunAccessReportRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  runAccessReport(
+    request: protos.google.analytics.admin.v1alpha.IRunAccessReportRequest,
+    callback: Callback<
+      protos.google.analytics.admin.v1alpha.IRunAccessReportResponse,
+      | protos.google.analytics.admin.v1alpha.IRunAccessReportRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  runAccessReport(
+    request?: protos.google.analytics.admin.v1alpha.IRunAccessReportRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
+          protos.google.analytics.admin.v1alpha.IRunAccessReportResponse,
+          | protos.google.analytics.admin.v1alpha.IRunAccessReportRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.analytics.admin.v1alpha.IRunAccessReportResponse,
+      | protos.google.analytics.admin.v1alpha.IRunAccessReportRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.analytics.admin.v1alpha.IRunAccessReportResponse,
+      protos.google.analytics.admin.v1alpha.IRunAccessReportRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
+    request = request || {};
+    let options: CallOptions;
+    if (typeof optionsOrCallback === 'function' && callback === undefined) {
+      callback = optionsOrCallback;
+      options = {};
+    } else {
+      options = optionsOrCallback as CallOptions;
+    }
+    options = options || {};
+    options.otherArgs = options.otherArgs || {};
+    options.otherArgs.headers = options.otherArgs.headers || {};
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        entity: request.entity || '',
+      });
+    this.initialize();
+    return this.innerApiCalls.runAccessReport(request, options, callback);
   }
 
   /**
