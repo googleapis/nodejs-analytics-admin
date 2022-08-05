@@ -290,6 +290,36 @@
                 "getDataStream"
               ]
             },
+            "GetAudience": {
+              "methods": [
+                "getAudience"
+              ]
+            },
+            "CreateAudience": {
+              "methods": [
+                "createAudience"
+              ]
+            },
+            "UpdateAudience": {
+              "methods": [
+                "updateAudience"
+              ]
+            },
+            "ArchiveAudience": {
+              "methods": [
+                "archiveAudience"
+              ]
+            },
+            "GetAttributionSettings": {
+              "methods": [
+                "getAttributionSettings"
+              ]
+            },
+            "UpdateAttributionSettings": {
+              "methods": [
+                "updateAttributionSettings"
+              ]
+            },
             "ListAccounts": {
               "methods": [
                 "listAccounts",
@@ -393,6 +423,13 @@
                 "listDataStreams",
                 "listDataStreamsStream",
                 "listDataStreamsAsync"
+              ]
+            },
+            "ListAudiences": {
+              "methods": [
+                "listAudiences",
+                "listAudiencesStream",
+                "listAudiencesAsync"
               ]
             }
           }
@@ -680,6 +717,36 @@
                 "getDataStream"
               ]
             },
+            "GetAudience": {
+              "methods": [
+                "getAudience"
+              ]
+            },
+            "CreateAudience": {
+              "methods": [
+                "createAudience"
+              ]
+            },
+            "UpdateAudience": {
+              "methods": [
+                "updateAudience"
+              ]
+            },
+            "ArchiveAudience": {
+              "methods": [
+                "archiveAudience"
+              ]
+            },
+            "GetAttributionSettings": {
+              "methods": [
+                "getAttributionSettings"
+              ]
+            },
+            "UpdateAttributionSettings": {
+              "methods": [
+                "updateAttributionSettings"
+              ]
+            },
             "ListAccounts": {
               "methods": [
                 "listAccounts",
@@ -783,6 +850,13 @@
                 "listDataStreams",
                 "listDataStreamsStream",
                 "listDataStreamsAsync"
+              ]
+            },
+            "ListAudiences": {
+              "methods": [
+                "listAudiences",
+                "listAudiencesStream",
+                "listAudiencesAsync"
               ]
             }
           }
